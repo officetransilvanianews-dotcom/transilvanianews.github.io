@@ -1,0 +1,284 @@
+/* ============================================================
+   TRANSILVANIA NEWS — Cupa Mondială 2026
+   Brand foundation: tokens, fonts, motifs, 3 skins
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Saira+Condensed:ital,wght@0,500;0,600;0,700;0,800;0,900;1,800;1,900&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;0,800;1,600&family=Barlow+Semi+Condensed:wght@600;700;800&display=swap');
+
+:root{
+  /* Transilvania News palette (from logo) */
+  --tn-red:        #E5242B;
+  --tn-red-deep:   #B0141A;
+  --tn-red-bright: #FF453B;
+  --tn-ink:        #121319;
+  --tn-ink-2:      #1E2027;
+  --tn-paper:      #FFFFFF;
+  --tn-line:       #E4E6EB;
+  --tn-muted:      #6B7080;
+  --tn-gold:       #F4B233;
+
+  --font-display: "Saira Condensed", system-ui, sans-serif;
+  --font-head:    "Barlow Semi Condensed", system-ui, sans-serif;
+  --font-body:    "Barlow", system-ui, sans-serif;
+
+  --skew: -10deg;
+}
+
+*{ box-sizing:border-box; }
+
+/* ============================================================
+   POSTER SHELL  (fixed 1080 x 1080)
+   ============================================================ */
+.poster{
+  width:1080px; height:1080px;
+  position:relative; overflow:hidden;
+  font-family:var(--font-body);
+  color:var(--fg);
+  background:var(--bg);
+  --fg:#fff;
+  -webkit-font-smoothing:antialiased;
+  isolation:isolate;
+  user-select:none;
+}
+.poster *{ -webkit-user-drag:none; }
+.poster .edit{ user-select:text; }
+
+/* numbers */
+.tnum{ font-variant-numeric:tabular-nums; font-feature-settings:"tnum"; }
+
+/* ============================================================
+   SKIN: ROȘU  — bright Transilvania red, halftone dots
+   ============================================================ */
+.skin-rosu{
+  --fg:#fff;
+  --bg:
+    radial-gradient(120% 80% at 50% -10%, #FF4B41 0%, var(--tn-red) 42%, var(--tn-red-deep) 100%);
+  --panel:#fff;
+  --panel-fg:#15171d;
+  --panel-sub:#6B7080;
+  --panel-line:#ECEDF1;
+  --accent:var(--tn-red);
+  --sub:rgba(255,255,255,.82);
+  --chip:rgba(255,255,255,.14);
+  --chip-line:rgba(255,255,255,.34);
+  --disc:#fff;
+  --disc-fg:#9aa0ad;
+}
+
+/* ============================================================
+   SKIN: DARK — near-black, premium, red accents
+   ============================================================ */
+.skin-dark{
+  --fg:#fff;
+  --bg:
+    radial-gradient(120% 90% at 78% -8%, rgba(229,36,43,.30) 0%, rgba(229,36,43,0) 46%),
+    radial-gradient(100% 80% at 10% 110%, rgba(229,36,43,.16) 0%, rgba(229,36,43,0) 50%),
+    linear-gradient(180deg, #15161C 0%, #0C0D12 100%);
+  --panel:#191B22;
+  --panel-fg:#fff;
+  --panel-sub:#9298A6;
+  --panel-line:rgba(255,255,255,.08);
+  --accent:var(--tn-red);
+  --sub:rgba(255,255,255,.6);
+  --chip:rgba(255,255,255,.06);
+  --chip-line:rgba(255,255,255,.12);
+  --disc:#23252E;
+  --disc-fg:#6A7080;
+}
+
+/* ============================================================
+   SKIN: STADION — dark stadium ground, red banner
+   ============================================================ */
+.skin-stadion{
+  --fg:#fff;
+  --bg:
+    radial-gradient(80% 50% at 16% 18%, rgba(255,120,40,.20) 0%, rgba(255,120,40,0) 60%),
+    radial-gradient(80% 50% at 86% 16%, rgba(40,180,120,.18) 0%, rgba(40,180,120,0) 60%),
+    radial-gradient(120% 80% at 50% 120%, rgba(229,36,43,.22) 0%, rgba(229,36,43,0) 55%),
+    linear-gradient(180deg, #0B0D14 0%, #090A10 55%, #0B0C12 100%);
+  --panel:rgba(17,18,25,.72);
+  --panel-fg:#fff;
+  --panel-sub:#AEB3C0;
+  --panel-line:rgba(255,255,255,.10);
+  --accent:var(--tn-red);
+  --sub:rgba(255,255,255,.72);
+  --chip:rgba(255,255,255,.08);
+  --chip-line:rgba(255,255,255,.16);
+  --disc:rgba(255,255,255,.92);
+  --disc-fg:#8a8f9c;
+}
+/* ============================================================
+   STADIUM BACKGROUND LAYER (all skins, subtly tuned per skin)
+   ============================================================ */
+.poster-stadium{ position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+.poster-stadium .ps-img{ position:absolute; inset:0;
+  background:url('assets/stadium.jpg') 50% 30% / cover no-repeat; }
+.poster-stadium .ps-veil{ position:absolute; inset:0; }
+
+/* DARK — moody, photo clearly present */
+.skin-dark .poster-stadium .ps-img{ opacity:.62; }
+.skin-dark .poster-stadium .ps-veil{ background:
+  linear-gradient(180deg, rgba(13,14,20,.74) 0%, rgba(13,14,20,.40) 34%, rgba(13,14,20,.58) 66%, rgba(10,11,16,.86) 100%),
+  radial-gradient(120% 90% at 80% -10%, rgba(229,36,43,.22) 0%, transparent 48%); }
+
+/* STADION — photo is the hero of this skin */
+.skin-stadion .poster-stadium .ps-img{ opacity:.8; }
+.skin-stadion .poster-stadium .ps-veil{ background:
+  linear-gradient(180deg, rgba(8,9,14,.62) 0%, rgba(8,9,14,.22) 32%, rgba(8,9,14,.42) 70%, rgba(8,9,14,.84) 100%),
+  radial-gradient(120% 80% at 50% 120%, rgba(229,36,43,.20) 0%, transparent 56%);
+}
+.skin-stadion .poster-stadium::after{ content:""; position:absolute; inset:0; pointer-events:none;
+  background-image:repeating-linear-gradient(115deg, rgba(255,255,255,.025) 0 2px, transparent 2px 7px);
+  opacity:.5; }
+
+/* ROȘU — just a textured ghost; kill the blue, keep brand red dominant */
+.skin-rosu .poster-stadium .ps-img{ opacity:.26; mix-blend-mode:luminosity; }
+.skin-rosu .poster-stadium .ps-veil{ background:
+  linear-gradient(180deg, rgba(229,36,43,.40) 0%, rgba(229,36,43,.10) 36%, rgba(176,20,26,.34) 100%); }
+
+/* ============================================================
+   BRAND MOTIFS
+   ============================================================ */
+
+/* — Halftone dot field (corner accent) — */
+.tn-dots{
+  position:absolute; pointer-events:none; color:inherit; z-index:1;
+  background-image:radial-gradient(currentColor 28%, transparent 30%);
+  background-size:15px 15px;
+}
+.tn-dots.tl{ top:0; left:0; width:340px; height:340px;
+  -webkit-mask-image:radial-gradient(120% 120% at 0% 0%, #000 0%, transparent 66%);
+          mask-image:radial-gradient(120% 120% at 0% 0%, #000 0%, transparent 66%); }
+.tn-dots.br{ bottom:0; right:0; width:360px; height:360px;
+  -webkit-mask-image:radial-gradient(120% 120% at 100% 100%, #000 0%, transparent 66%);
+          mask-image:radial-gradient(120% 120% at 100% 100%, #000 0%, transparent 66%); }
+
+/* — Diagonal slash ticks ( //// ) — */
+.tn-slashes{ display:inline-flex; gap:5px; align-items:center; }
+.tn-slashes i{ width:5px; height:20px; background:currentColor; transform:skewX(var(--skew)); border-radius:1px; display:block; }
+
+/* — Skewed banner (the logo lockup language) — */
+.tn-banner{
+  display:inline-flex; align-items:center;
+  transform:skewX(var(--skew));
+  padding:6px 20px 7px;
+  line-height:.9;
+}
+.tn-banner > *{ transform:skewX(calc(var(--skew) * -1)); }
+.tn-banner.red{ background:var(--tn-red); color:#fff; }
+.tn-banner.white{ background:#fff; color:var(--tn-red); }
+.tn-banner.ink{ background:var(--tn-ink); color:#fff; }
+
+/* — Mini Transilvania News logo lockup — */
+.tn-logo{ display:inline-flex; flex-direction:column; gap:5px; align-items:flex-start; }
+.tn-logo .tn-banner{ font-family:var(--font-display); font-weight:900; font-style:normal;
+  letter-spacing:.01em; box-shadow:0 6px 18px rgba(0,0,0,.18); }
+.tn-logo .l1{ font-size:30px; padding:4px 22px 6px 16px; }
+.tn-logo .l2{ font-size:30px; padding:4px 24px 6px 16px; margin-left:26px; }
+
+/* ============================================================
+   SHARED HEADER / FOOTER
+   ============================================================ */
+.poster-pad{ position:absolute; inset:0; padding:64px 70px; display:flex; flex-direction:column; z-index:2; }
+
+.p-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:24px; }
+.p-head .wc{ text-align:right; flex:0 0 auto; }
+.p-head .wc .kick{ font-family:var(--font-head); font-weight:800; letter-spacing:.13em;
+  font-size:17px; color:var(--accent); text-transform:uppercase; white-space:nowrap; }
+.skin-rosu .p-head .wc .kick{ color:#fff; }
+.p-head .wc .cup{ font-family:var(--font-display); font-weight:900; font-size:42px; line-height:.92;
+  text-transform:uppercase; letter-spacing:.005em; }
+.p-head .wc .host{ font-family:var(--font-head); font-weight:700; letter-spacing:.13em; font-size:15px;
+  color:var(--sub); text-transform:uppercase; margin-top:5px; white-space:nowrap; }
+.p-head .wc .cup{ margin-top:1px; }
+
+.p-foot{ margin-top:auto; display:flex; align-items:center; justify-content:space-between; gap:20px;
+  padding-top:22px; }
+.p-foot .handle{ display:flex; align-items:center; gap:12px; font-family:var(--font-head);
+  font-weight:700; letter-spacing:.04em; font-size:21px; flex:0 0 auto; white-space:nowrap; }
+.p-foot .handle .dot{ width:9px; height:9px; border-radius:50%; background:var(--accent); }
+.skin-rosu .p-foot .handle .dot{ background:#fff; }
+.p-foot .note{ font-family:var(--font-body); font-weight:600; font-size:16px; color:var(--sub);
+  letter-spacing:.02em; flex:0 0 auto; white-space:nowrap; text-align:right; }
+
+/* big poster title block */
+.p-title{ font-family:var(--font-display); font-weight:900; text-transform:uppercase;
+  line-height:.86; letter-spacing:.004em; }
+.p-kicker{ font-family:var(--font-head); font-weight:800; letter-spacing:.2em; font-size:20px;
+  text-transform:uppercase; color:var(--accent); display:flex; align-items:center; gap:14px;
+  white-space:nowrap; }
+.skin-rosu .p-kicker{ color:#fff; }
+.p-kicker .ln{ height:3px; width:46px; background:currentColor; border-radius:2px; }
+
+/* ============================================================
+   FLAG DISC  (image-slot circular)
+   ============================================================ */
+.flagdisc{ border-radius:50%; background:#F3F4F6; position:relative; flex:0 0 auto;
+  box-shadow:0 6px 18px rgba(0,0,0,.22); display:grid; place-items:center; overflow:hidden; }
+.flagdisc.ring{ box-shadow:0 0 0 4px #fff, 0 8px 22px rgba(0,0,0,.30); }
+.skin-rosu .flagdisc.ring{ box-shadow:0 0 0 4px rgba(255,255,255,.9), 0 8px 22px rgba(120,0,0,.35); }
+.flagdisc .code{ position:absolute; inset:0; display:grid; place-items:center; z-index:0;
+  font-family:var(--font-head); font-weight:800; color:#9aa0ad; letter-spacing:.02em;
+  pointer-events:none; }
+.flagdisc image-slot{ position:absolute; inset:0; width:100%; height:100%; display:block; z-index:1; }
+.flagdisc image-slot::part(empty){ opacity:0; }
+
+/* ============================================================
+   CHIPS / PILLS
+   ============================================================ */
+.pill{ display:inline-flex; align-items:center; gap:10px; border-radius:999px; white-space:nowrap;
+  font-family:var(--font-head); font-weight:800; letter-spacing:.05em; text-transform:uppercase; }
+.pill.solid{ background:var(--accent); color:#fff; }
+.skin-rosu .pill.solid{ background:#fff; color:var(--tn-red); }
+.pill.ghost{ background:var(--chip); border:1.5px solid var(--chip-line); color:var(--fg); }
+.pill.gold{ background:var(--tn-gold); color:#3a2a00; }
+
+.tag-grp{ display:inline-flex; align-items:center; gap:8px; font-family:var(--font-head);
+  font-weight:800; letter-spacing:.08em; text-transform:uppercase; font-size:15px;
+  color:var(--sub); }
+.tag-grp b{ color:var(--accent); }
+.skin-rosu .tag-grp b{ color:#fff; }
+
+/* editable affordance */
+.edit{ outline:none; border-radius:4px; transition:box-shadow .12s; }
+.edit:hover{ box-shadow:0 0 0 2px rgba(127,127,127,.25); }
+.edit:focus{ box-shadow:0 0 0 2px var(--accent); background:rgba(127,127,127,.08); }
+
+/* logo legibility on red bg */
+.skin-rosu .tn-logo .tn-banner.red{ box-shadow:0 0 0 3px #fff, 0 6px 18px rgba(120,0,0,.25); }
+
+/* halftone dot color per skin */
+.skin-rosu .tn-dots{ color:rgba(255,255,255,.20); }
+.skin-dark .tn-dots{ color:rgba(229,36,43,.50); }
+.skin-stadion .tn-dots{ color:rgba(229,36,43,.42); }
+
+/* ---- football motifs ---- */
+.m-ball, .m-trophy{ display:block; }
+.ball-img{ display:block; border-radius:50%; object-fit:cover; }
+.pitch-wm{ position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden;
+  display:flex; align-items:center; justify-content:center; }
+.pitch-wm .m-pitch{ width:1240px; height:auto; }
+.skin-rosu .pitch-wm{ color:#fff; opacity:.09; }
+.skin-dark .pitch-wm{ color:var(--tn-red); opacity:.11; }
+.skin-stadion .pitch-wm{ color:#fff; opacity:.07; }
+
+.p-kicker .kball{ display:inline-flex; align-items:center; }
+.p-kicker .kball .ball-img{ filter:drop-shadow(0 3px 6px rgba(0,0,0,.22)); }
+
+.p-foot .handle .fball{ display:inline-flex; align-items:center;
+  filter:drop-shadow(0 4px 9px rgba(0,0,0,.32)); }
+
+/* World Cup trophy in header lockup */
+.wc-lock{ display:flex; align-items:center; gap:18px; }
+.wc-trophy{ height:96px; width:auto; flex:0 0 auto;
+  filter:drop-shadow(0 8px 16px rgba(0,0,0,.42)); }
+
+.vsball{ display:flex; justify-content:center; margin-bottom:-8px;
+  filter:drop-shadow(0 14px 26px rgba(0,0,0,.5)); }
+.vsball .ball-img{ border-radius:50%; }
+
+.lead-tr{ display:inline-flex; align-items:center; margin-left:8px; }
+.lead-trophy{ height:40px; width:auto; filter:drop-shadow(0 4px 8px rgba(0,0,0,.3)); }
+.title-tr{ display:inline-flex; align-items:center; margin-left:20px; vertical-align:middle; }
+.title-trophy{ height:74px; width:auto; filter:drop-shadow(0 8px 16px rgba(0,0,0,.4)); }
+.p-title.xl{ display:inline-flex; align-items:center; }
