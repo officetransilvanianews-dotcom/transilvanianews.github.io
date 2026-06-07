@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transilvania News · Cupa Mondială 2026 — Kit postări</title>
+<link rel="stylesheet" href="brand.css">
+<link rel="stylesheet" href="templates.css">
+<style>
+  :root{
+    --bg:#141519; --bg-2:#1B1C22; --pane:#1E2027; --line:rgba(255,255,255,.09);
+    --txt:#EDEEF2; --sub:#9499A6; --red:#E5242B;
+    --ui:"Barlow", system-ui, sans-serif; --disp:"Saira Condensed", sans-serif;
+  }
+  *{ box-sizing:border-box; }
+  html,body{ margin:0; }
+  body{ background:
+      radial-gradient(80% 50% at 100% 0%, rgba(229,36,43,.10) 0%, transparent 55%),
+      var(--bg);
+    color:var(--txt); font-family:var(--ui); -webkit-font-smoothing:antialiased; }
+
+  /* ---------- top bar ---------- */
+  .topbar{ position:sticky; top:0; z-index:50; display:flex; align-items:center; gap:18px;
+    padding:18px 40px; background:rgba(18,19,24,.82); backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line); }
+  .topbar .mark{ display:flex; flex-direction:column; gap:3px; }
+  .topbar .mark .b1, .topbar .mark .b2{ font-family:var(--disp); font-weight:900; font-size:19px;
+    line-height:.95; transform:skewX(-10deg); padding:2px 11px; width:max-content; letter-spacing:.01em; }
+  .topbar .mark .b1{ background:var(--red); color:#fff; }
+  .topbar .mark .b2{ background:#fff; color:var(--red); margin-left:14px; }
+  .topbar .b1 span,.topbar .b2 span{ display:inline-block; transform:skewX(10deg); }
+  .topbar h1{ font-size:17px; font-weight:700; margin:0; letter-spacing:.01em; }
+  .topbar h1 b{ color:var(--red); }
+  .topbar .right{ margin-left:auto; font-size:13px; color:var(--sub); font-weight:600;
+    letter-spacing:.02em; }
+
+  /* ---------- brief ---------- */
+  .wrap{ max-width:1480px; margin:0 auto; padding:46px 40px 90px; }
+  .brief{ display:grid; grid-template-columns:1.5fr 1fr; gap:30px; align-items:stretch;
+    background:linear-gradient(180deg, var(--bg-2), #15161B); border:1px solid var(--line);
+    border-radius:22px; padding:38px 40px; margin-bottom:54px; }
+  .brief h2{ font-family:var(--disp); font-weight:900; font-size:40px; line-height:.98; margin:0 0 14px;
+    text-transform:uppercase; letter-spacing:.005em; }
+  .brief h2 em{ color:var(--red); font-style:normal; }
+  .brief p{ margin:0 0 14px; color:#C9CCD4; font-size:16px; line-height:1.6; max-width:62ch; }
+  .brief p b{ color:#fff; }
+  .chips{ display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
+  .chips span{ font-size:13px; font-weight:700; letter-spacing:.03em; padding:8px 14px; border-radius:999px;
+    background:rgba(255,255,255,.05); border:1px solid var(--line); color:#D7DAE1; }
+  .chips span b{ color:var(--red); }
+  .how{ background:#15161B; border:1px solid var(--line); border-radius:16px; padding:24px 26px; }
+  .how h3{ margin:0 0 14px; font-size:13px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--sub); font-weight:800; }
+  .how ol{ margin:0; padding-left:20px; display:flex; flex-direction:column; gap:11px; }
+  .how li{ font-size:14.5px; line-height:1.5; color:#C9CCD4; }
+  .how li b{ color:#fff; }
+  .note{ margin-top:18px; padding-top:16px; border-top:1px solid var(--line); font-size:12.5px;
+    color:var(--sub); line-height:1.55; }
+  .note b{ color:#C9CCD4; }
+
+  /* ---------- sections ---------- */
+  .sec{ margin-bottom:64px; }
+  .sec-head{ margin-bottom:24px; max-width:760px; }
+  .sec-tag{ display:inline-block; font-size:11.5px; font-weight:800; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--red); padding:5px 11px; border:1px solid rgba(229,36,43,.4);
+    border-radius:999px; margin-bottom:12px; }
+  .sec-head h2{ font-family:var(--disp); font-weight:900; font-size:34px; margin:0 0 7px;
+    text-transform:uppercase; letter-spacing:.01em; }
+  .sec-head p{ margin:0; color:var(--sub); font-size:15.5px; line-height:1.5; }
+
+  .cards{ display:grid; grid-template-columns:repeat(auto-fill, 452px); gap:30px; justify-content:start; }
+  .card{ display:flex; flex-direction:column; gap:12px; }
+  .card-head{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .card-name{ font-size:14px; font-weight:700; color:#D7DAE1; letter-spacing:.02em; }
+  .card-open{ appearance:none; border:1px solid var(--line); background:rgba(255,255,255,.04);
+    color:#C9CCD4; font-family:var(--ui); font-size:12.5px; font-weight:700; letter-spacing:.02em;
+    padding:7px 13px; border-radius:8px; cursor:pointer; transition:.14s; }
+  .card-open:hover{ background:var(--red); border-color:var(--red); color:#fff; }
+  .card-frame{ position:relative; border-radius:14px; overflow:hidden; cursor:zoom-in;
+    box-shadow:0 18px 50px rgba(0,0,0,.45), 0 0 0 1px var(--line); background:#0c0d10;
+    width:max-content; }
+  .stage{ position:relative; overflow:hidden; display:block; }
+  .stage .poster{ position:absolute; top:0; left:0; }
+
+  /* ---------- lightbox ---------- */
+  #lightbox{ position:fixed; inset:0; z-index:100; display:none; align-items:center; justify-content:center;
+    background:rgba(8,9,12,.86); backdrop-filter:blur(10px); padding:90px 40px 60px; }
+  #lightbox.open{ display:flex; }
+  .lb-bar{ position:fixed; top:0; left:0; right:0; height:64px; display:flex; align-items:center;
+    gap:18px; padding:0 30px; background:rgba(14,15,19,.7); border-bottom:1px solid var(--line); }
+  #lb-title{ font-size:14px; font-weight:700; color:#E7E9EE; letter-spacing:.02em; }
+  .lb-bar .hint{ margin-left:auto; font-size:12.5px; color:var(--sub); }
+  #lb-close{ appearance:none; border:1px solid var(--line); background:rgba(255,255,255,.05);
+    color:#E7E9EE; width:38px; height:38px; border-radius:9px; cursor:pointer; font-size:18px; line-height:1; }
+  #lb-close:hover{ background:var(--red); border-color:var(--red); color:#fff; }
+  #lb-stage{ position:relative; overflow:hidden; border-radius:8px;
+    box-shadow:0 30px 90px rgba(0,0,0,.6); }
+  #lb-stage .poster{ position:absolute; top:0; left:0; transform-origin:top left; }
+
+  @media (max-width:900px){
+    .brief{ grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="mark">
+      <div class="b1"><span>TRANSILVANIA</span></div>
+      <div class="b2"><span>NEWS</span></div>
+    </div>
+    <h1>Kit postări · <b>Cupa Mondială 2026</b></h1>
+    <div class="right">1080 × 1080 · feed Facebook / Instagram</div>
+  </div>
+
+  <div class="wrap">
+    <div class="brief">
+      <div>
+        <h2>Șabloane gata de postat pentru <em>Cupa Mondială 2026</em></h2>
+        <p>Un sistem vizual unitar în identitatea <b>Transilvania News</b> — roșu aprins, type
+          condensat italic, benzi diagonale și pattern de puncte. Aceleași elemente din sigla ta,
+          aplicate sportiv și curat, fără zgomot inutil.</p>
+        <p>Mai jos ai <b>5 tipuri de postare × 3 stiluri</b>. Alege direcția care îți place — apoi
+          o rafinăm și o transformăm într-un set final pe care îl completezi în fiecare zi.</p>
+        <div class="chips">
+          <span><b>5</b> tipuri de postare</span>
+          <span><b>3</b> stiluri vizuale</span>
+          <span>Text <b>editabil</b> în pagină</span>
+          <span>Sloturi <b>drag &amp; drop</b> pentru steaguri &amp; căpitani</span>
+        </div>
+      </div>
+      <div class="how">
+        <h3>Cum folosești</h3>
+        <ol>
+          <li><b>Editează / mărește</b> deschide afișul mare — ideal pentru completat.</li>
+          <li><b>Click pe text</b> (oră, echipe, scor) și scrii direct peste. Se salvează singur.</li>
+          <li><b>Trage o imagine</b> peste discul rotund (steag/siglă) sau peste caseta de jucător.</li>
+        </ol>
+        <div class="note"><b>De adus de la tine:</b> siglele oficiale UEFA/FIFA, emblemele
+          echipelor și pozele căpitanilor sunt materiale cu drepturi de autor — le pui tu în
+          sloturi. Eu pregătesc structura. Datele din exemple (meciuri, scoruri) sunt
+          demonstrative, pe baza tragerii la sorți reale.</div>
+      </div>
+    </div>
+
+    <div id="gallery"></div>
+  </div>
+
+  <div id="lightbox">
+    <div class="lb-bar">
+      <span id="lb-title"></span>
+      <span class="hint">Click pe text pentru a-l edita · trage imagini în sloturi · Esc pentru a închide</span>
+      <button id="lb-close" type="button" aria-label="Închide">✕</button>
+    </div>
+    <div id="lb-stage"></div>
+  </div>
+
+  <script src="image-slot.js"></script>
+  <script src="motifs.js"></script>
+  <script src="data.js"></script>
+  <script src="posters.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
