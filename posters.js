@@ -114,7 +114,7 @@ window.Posters = (function () {
       <div class="duel-grid">
         ${col('a', d.a)}
         <div class="vs-col">
-          <div class="vsball">${ballImg(124)}</div>
+          <div class="vsball" style="display:flex;align-items:center;justify-content:center;"><img src="assets/trophy-a.png" alt="" style="height:172px;width:auto;filter:drop-shadow(0 6px 22px rgba(0,0,0,.7));"></div>
           <div class="vs">VS</div>
           <div class="when">
             <span class="pill solid datepill tnum">${ed(skin, 'duel-time', d.time)}</span>
