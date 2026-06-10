@@ -12,7 +12,6 @@ window.Posters = (function () {
   // detectează render mode (htmlcsstoimage)
   const isRender = !!(WC && WC.posterType);
 
-  // tiny inline icons
   const ic = {
     pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>',
     clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
@@ -25,21 +24,13 @@ window.Posters = (function () {
     return `<span class="edit${cls ? ' ' + cls : ''}" contenteditable="true" data-k="${key(skin, name)}" spellcheck="false">${text}</span>`;
   }
 
-  // circular flag — render mode: img local; gallery mode: image-slot interactiv
+  // flag circle — render mode: img local; gallery: image-slot
   function flag(skin, name, code, size, ring) {
     const inner = isRender
       ? `<img src="assets/flags/${code}.jpg" alt="${code}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
       : `<span class="code" style="font-size:${Math.max(11, Math.round(size * 0.34))}px">${code}</span>
          <image-slot id="${key(skin, name)}" shape="circle" placeholder="${code}"></image-slot>`;
-    return `<div class="flagdisc${ring ? ' ring' : ''}" style="width:${size}px;height:${size}px">${inner}</div>`;
-  }
-
-  // player photo — render mode: img local; gallery mode: image-slot interactiv
-  function playerPhoto(skin, name, code, radius) {
-    if (isRender) {
-      return `<img src="assets/players/${code}.jpg" alt="${code}" style="width:100%;height:100%;object-fit:cover;border-radius:${radius || 24}px;">`;
-    }
-    return `<image-slot id="${key(skin, name)}" shape="rounded" radius="${radius || 24}" placeholder="Foto căpitan ${code}"></image-slot>`;
+    return `<div class="flagdisc${ring ? ' ring' : ''}" style="width:${size}px;height:${size}px;overflow:hidden;">${inner}</div>`;
   }
 
   function tnLogo() {
@@ -110,11 +101,11 @@ window.Posters = (function () {
       <div class="cap-col">
         <div class="cap-photo">
           <div class="ph-frame">${isRender
-            ? `<img src="assets/flags/${t.code}.jpg" alt="${t.code}" style="width:100%;height:100%;object-fit:contain;border-radius:24px;background:rgba(180,20,20,0.45);">`
+            ? `<img src="assets/players/${t.code}.jpg" alt="${t.code}" style="width:100%;height:100%;object-fit:cover;border-radius:24px;">`
             : `<image-slot id="${key(skin, 'duel-ph-' + side)}" shape="rounded" radius="24" placeholder="Foto căpitan ${t.code}"></image-slot>`
           }</div>
           <div class="cap-flag">${isRender
-            ? `<div style="width:104px;height:104px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,0.3);"><img src="assets/players/${t.code}.jpg" alt="${t.code}" style="width:100%;height:100%;object-fit:cover;"></div>`
+            ? `<div style="width:104px;height:104px;border-radius:50%;overflow:hidden;">${flag(skin, 'duel-fl-' + side, t.code, 104, true)}</div>`
             : flag(skin, 'duel-fl-' + side, t.code, 104, true)
           }</div>
         </div>
