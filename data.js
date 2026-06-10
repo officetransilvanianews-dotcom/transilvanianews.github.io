@@ -49,7 +49,9 @@ window.WC = (function () {
     NOR:{n:"Norvegia"},   ARG:{n:"Argentina"},     ALG:{n:"Algeria"},
     AUT:{n:"Austria"},    JOR:{n:"Iordania"},      POR:{n:"Portugalia"},
     UZB:{n:"Uzbekistan"}, COL:{n:"Columbia"},      ENG:{n:"Anglia"},
-    CRO:{n:"Croația"},    GHA:{n:"Ghana"},         PAN:{n:"Panama"}
+    CRO:{n:"Croația"},    GHA:{n:"Ghana"},         PAN:{n:"Panama"},
+    CZE:{n:"Cehia"},      BIH:{n:"Bosnia și Herțegovina"}, TUR:{n:"Turcia"},
+    SWE:{n:"Suedia"},     IRQ:{n:"Irak"},          COD:{n:"R.D. Congo"}
   };
 
   const STAD = {
