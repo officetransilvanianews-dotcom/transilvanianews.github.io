@@ -131,7 +131,6 @@ window.Posters = (function () {
           }</div>
         </div>
         <div class="cap-name">${ed(skin, 'duel-nm-' + side, tn(t.code))}</div>
-        <div class="cap-handle">${ed(skin, 'duel-cap-' + side, t.cap)}</div>
       </div>`;
     const inner = `
       ${header(skin)}
