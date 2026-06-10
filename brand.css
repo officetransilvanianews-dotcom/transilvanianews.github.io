@@ -132,9 +132,14 @@
   opacity:.5; }
 
 /* ROȘU — just a textured ghost; kill the blue, keep brand red dominant */
-.skin-rosu .poster-stadium .ps-img{ opacity:.26; mix-blend-mode:luminosity; }
+.skin-rosu .poster-stadium .ps-img{ opacity:.44; mix-blend-mode:luminosity; }
 .skin-rosu .poster-stadium .ps-veil{ background:
-  linear-gradient(180deg, rgba(229,36,43,.40) 0%, rgba(229,36,43,.10) 36%, rgba(176,20,26,.34) 100%); }
+  linear-gradient(180deg,
+    rgba(229,36,43,.40) 0%,
+    rgba(229,36,43,.26) 24%,
+    rgba(229,36,43,.13) 48%,
+    rgba(204,26,32,.12) 70%,
+    rgba(176,20,26,.24) 100%); }
 
 /* ============================================================
    BRAND MOTIFS
@@ -152,6 +157,11 @@
 .tn-dots.br{ bottom:0; right:0; width:360px; height:360px;
   -webkit-mask-image:radial-gradient(120% 120% at 100% 100%, #000 0%, transparent 66%);
           mask-image:radial-gradient(120% 120% at 100% 100%, #000 0%, transparent 66%); }
+
+/* — Watermark (pagina de Facebook) — */
+.tn-wm{ position:absolute; left:50%; bottom:22px; transform:translateX(-50%);
+  font-family:var(--font-head); font-weight:700; font-size:15px; letter-spacing:.24em;
+  text-transform:uppercase; color:var(--tn-gold); opacity:.6; z-index:3; white-space:nowrap; }
 
 /* — Diagonal slash ticks ( //// ) — */
 .tn-slashes{ display:inline-flex; gap:5px; align-items:center; }
@@ -248,7 +258,10 @@
 .skin-rosu .tn-logo .tn-banner.red{ box-shadow:0 0 0 3px #fff, 0 6px 18px rgba(120,0,0,.25); }
 
 /* halftone dot color per skin */
-.skin-rosu .tn-dots{ color:rgba(255,255,255,.20); }
+.skin-rosu .tn-dots{ color:rgba(8,9,12,.52);
+  background-image:
+    radial-gradient(circle at 37% 33%, rgba(255,255,255,.30) 0%, rgba(255,255,255,0) 16%),
+    radial-gradient(currentColor 28%, transparent 30%); }
 .skin-dark .tn-dots{ color:rgba(229,36,43,.50); }
 .skin-stadion .tn-dots{ color:rgba(229,36,43,.42); }
 
