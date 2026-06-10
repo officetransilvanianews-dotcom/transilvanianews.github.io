@@ -109,8 +109,14 @@ window.Posters = (function () {
     const col = (side, t) => `
       <div class="cap-col">
         <div class="cap-photo">
-          <div class="ph-frame">${playerPhoto(skin, 'duel-ph-' + side, t.code, 24)}</div>
-          <div class="cap-flag">${flag(skin, 'duel-fl-' + side, t.code, 104, true)}</div>
+          <div class="ph-frame">${isRender
+            ? `<img src="assets/flags/${t.code}.jpg" alt="${t.code}" style="width:100%;height:100%;object-fit:cover;border-radius:24px;">`
+            : `<image-slot id="${key(skin, 'duel-ph-' + side)}" shape="rounded" radius="24" placeholder="Foto căpitan ${t.code}"></image-slot>`
+          }</div>
+          <div class="cap-flag" style="${isRender ? 'overflow:hidden;border-radius:50%;' : ''}">${isRender
+            ? `<img src="assets/players/${t.code}.jpg" alt="${t.code}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
+            : flag(skin, 'duel-fl-' + side, t.code, 104, true)
+          }</div>
         </div>
         <div class="cap-name">${ed(skin, 'duel-nm-' + side, tn(t.code))}</div>
         <div class="cap-handle">${ed(skin, 'duel-cap-' + side, t.cap)}</div>
