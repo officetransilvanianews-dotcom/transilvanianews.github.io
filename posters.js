@@ -1,29 +1,37 @@
 /* ============================================================
    Poster renderers — return HTML for a 1080×1080 .poster
+   v3 — design nou + render mode pentru automatizare (htmlcsstoimage)
    ============================================================ */
 window.Posters = (function () {
   const WC = window.WC;
   const M = window.Motifs;
   const tn = (c) => (WC.teams[c] || {}).n || c;
+  const ballImg = (px) => `<img class="ball-img" src="assets/ball2.png" alt="" width="${px}" height="${px}">`;
   const trophyImg = (cls) => `<img class="${cls}" src="assets/trophy-a.png" alt="">`;
   const kAccent = () => `<span class="ln"></span>`;
 
-  // render mode: activ când există ?poster= în URL (htmlcsstoimage)
+  // render mode: activ când există ?poster= în URL (htmlcsstoimage).
+  // În acest mod imaginile se iau AUTOMAT din assets după codul FIFA,
+  // în loc de sloturile interactive <image-slot> (drag & drop) din galerie.
   const isRender = !!(WC && WC.posterType);
 
+  // tiny inline icons (Lucide-style, 2px)
   const ic = {
     pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>',
     clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
     bell: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>'
   };
 
+  let _k = 0;
   const key = (skin, name) => `${skin}-${name}`;
 
+  // editable text span
   function ed(skin, name, text, cls) {
     return `<span class="edit${cls ? ' ' + cls : ''}" contenteditable="true" data-k="${key(skin, name)}" spellcheck="false">${text}</span>`;
   }
 
-  // flag cerc — render mode: img local; gallery: image-slot interactiv
+  // circular flag slot — render mode: drapel local din assets/flags;
+  // galerie: <image-slot> interactiv (drag & drop)
   function flag(skin, name, code, size, ring) {
     if (isRender) {
       return `<div class="flagdisc${ring ? ' ring' : ''}" style="width:${size}px;height:${size}px;overflow:hidden;">
@@ -64,6 +72,7 @@ window.Posters = (function () {
       <div class="poster-stadium"><div class="ps-img"></div><div class="ps-veil"></div></div>
       <div class="tn-dots tl"></div><div class="tn-dots br"></div>
       <div class="poster-pad">${inner}</div>
+      <div class="tn-wm">${ed(skin, 'wm', 'www.transilvanianews.ro')}</div>
     </div>`;
   }
   const heroTrophy = () => `<div class="hero-glow"></div>${trophyImg('hero-trophy')}`;
@@ -100,16 +109,25 @@ window.Posters = (function () {
   /* ---------------------------------------------------------- DUEL */
   function duel(skin) {
     const d = WC.duel;
+    const playing = [d.a.code, d.b.code];
+    const grows = d.group.map((r, i) => `
+      <div class="grp-row${playing.includes(r.code) ? ' play' : ''}">
+        <div class="g-pos"><span class="tnum">${i + 1}</span></div>
+        <div class="g-name"><span>${ed(skin, 'duel-gn' + i, tn(r.code))}</span></div>
+        <div class="g-pts"><span class="tnum">${ed(skin, 'duel-gp' + i, r.p)}</span></div>
+      </div>`).join('');
+    // render mode: ph-frame = drapel landscape (assets/flags),
+    //              cap-flag (cerc mic) = foto căpitan (assets/players)
     const col = (side, t) => `
       <div class="cap-col">
         <div class="cap-photo">
           <div class="ph-frame">${isRender
             ? `<img src="assets/flags/${t.code}.jpg" alt="${t.code}" style="display:block;width:100%;height:100%;object-fit:cover;">`
-            : `<image-slot id="${key(skin, 'duel-ph-' + side)}" shape="rounded" radius="24" placeholder="Foto căpitan ${t.code}"></image-slot>`
+            : `<image-slot id="${key(skin, 'duel-ph-' + side)}" shape="rounded" radius="24" placeholder="Steag ${t.code} (landscape)"></image-slot>`
           }</div>
           <div class="cap-flag">${isRender
-            ? `<div style="width:104px;height:104px;border-radius:50%;overflow:hidden;"><img src="assets/players/${t.code}.jpg" alt="${t.code}" style="width:100%;height:100%;object-fit:cover;object-position:top center;"></div>`
-            : flag(skin, 'duel-fl-' + side, t.code, 104, true)
+            ? `<div class="flagdisc ring" style="width:88px;height:88px;overflow:hidden;"><img src="assets/players/${t.code}.jpg" alt="${t.code}" style="width:100%;height:100%;object-fit:cover;object-position:top center;"></div>`
+            : flag(skin, 'duel-fl-' + side, t.code, 88, true)
           }</div>
         </div>
         <div class="cap-name">${ed(skin, 'duel-nm-' + side, tn(t.code))}</div>
@@ -118,28 +136,27 @@ window.Posters = (function () {
     const inner = `
       ${header(skin)}
       <div class="duel-top">
-        <div class="p-kicker">${kAccent()}${ed(skin, 'duel-kick', d.kicker)}${kAccent()}</div>
         <span class="pill solid stage">${ed(skin, 'duel-stage', d.stage)}</span>
       </div>
       <div class="duel-grid">
         ${col('a', d.a)}
         <div class="vs-col">
-          <div class="vsball" style="display:flex;align-items:center;justify-content:center;">
-            <img src="assets/trophy-a.png" alt="" style="height:172px;width:auto;filter:drop-shadow(0 6px 22px rgba(0,0,0,.7));">
-          </div>
-          <div class="vs">VS</div>
-          <div class="when">
-            <span class="pill solid datepill tnum">${ed(skin, 'duel-time', d.time)}</span>
-            <div class="where">
-              <div class="loc">${ic.pin}<span>${ed(skin, 'duel-stad', d.stad)}</span></div>
-              <div class="city">${ed(skin, 'duel-city', d.city)}</div>
-            </div>
-          </div>
+          <div class="vs-cup">${trophyImg('vs-trophy')}</div>
+        <div class="duel-score">
+          <span class="n tnum">${ed(skin, 'duel-sa', d.sa)}</span>
+          <span class="dash">–</span>
+          <span class="n tnum">${ed(skin, 'duel-sb', d.sb)}</span>
+        </div>
+        <span class="pill solid finpill">${ed(skin, 'duel-fin', 'Final')}</span>
         </div>
         ${col('b', d.b)}
       </div>
+      <div class="grp-table">
+        <div class="p-kicker grp-k">${kAccent()}${ed(skin, 'duel-grp', 'Grupa ' + d.grp)} · Clasament${kAccent()}</div>
+        ${grows}
+      </div>
       ${footer(skin, ed(skin, 'duel-date', d.date))}`;
-    return shell(skin, 'duel', 'Meci', inner);
+    return shell(skin, 'duel', 'Meci', inner, 'is-duel');
   }
 
   /* ---------------------------------------------------------- RESULTS */

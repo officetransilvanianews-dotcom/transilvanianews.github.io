@@ -1,33 +1,32 @@
 /* ============================================================
    Tournament data — Cupa Mondială 2026 (USA · Canada · Mexico)
-   v2 — URL-param driven pentru automatizare Make + htmlcsstoimage
+   v3 — design nou (duel = rezultatul zilei + mini-clasament)
+        + URL-param driven pentru automatizare Make + htmlcsstoimage
 
    Parametri URL acceptați:
 
    RESULTS (poster rezultate):
      ?poster=results
      &res_date=Miercuri%2C+17+iunie
-     &r0a=BRA&r0sa=3&r0b=MAR&r0sb=1&r0note=Vinícius+x2+·+Rodrygo&r0grp=C
-     &r1a=ESP&r1sa=2&r1b=KSA&r1sb=0&r1note=Yamal+·+Pedri&r1grp=H
+     &r0a=BRA&r0sa=3&r0b=MAR&r0sb=1&r0grp=C&r0note=Vinícius+x2+·+Rodrygo
      (până la 4 meciuri: r0..r3)
 
-   DUEL (poster meci zilei):
+   DUEL (poster rezultatul zilei + mini-clasament):
      ?poster=duel
-     &da=ARG&da_cap=L.+Messi
-     &db=FRA&db_cap=K.+Mbappé
-     &d_date=Duminică%2C+21+iunie
-     &d_time=22%3A00
-     &d_stad=MetLife+Stadium
-     &d_city=New+York+%2F+New+Jersey
-     &d_stage=Optimi+de+finală
+     &da=ARG&da_cap=L.+Messi&db=FRA&db_cap=K.+Mbappé
+     &d_date=Duminică%2C+21+iunie&d_sa=3&d_sb=1&d_grp=J
+     &d_stage=Faza+grupelor+·+Etapa+3
+     &g0c=ARG&g0p=6&g1c=FRA&g1p=4&g2c=AUT&g2p=3&g3c=JOR&g3p=1
+     (mini-clasament: g0..g3)
 
    SCHEDULE (program ziua):
      ?poster=schedule
      &sch_date=Joi%2C+18+iunie
      &s0a=ESP&s0b=URU&s0t=19%3A00&s0stad=Estadio+Azteca&s0city=Ciudad+de+México&s0grp=H
      (până la 4 meciuri: s0..s3)
-   ============================================================ */
 
+   Opțional: &skin=rosu|dark|stadion  (citit în app.js, default rosu)
+   ============================================================ */
 window.WC = (function () {
 
   /* ---- utilitare URL params ---- */
@@ -35,7 +34,7 @@ window.WC = (function () {
   const get = (key, fallback) => p.has(key) ? decodeURIComponent(p.get(key)) : fallback;
   const getInt = (key, fallback) => p.has(key) ? parseInt(p.get(key), 10) : fallback;
 
-  /* ---- echipe ---- */
+  // code3 used as the flag-disc placeholder; name in Romanian
   const T = {
     MEX:{n:"Mexic"},      RSA:{n:"Africa de Sud"}, KOR:{n:"Coreea de Sud"},
     CAN:{n:"Canada"},     QAT:{n:"Qatar"},         SUI:{n:"Elveția"},
@@ -66,63 +65,6 @@ window.WC = (function () {
   const posterType = get('poster', null);
 
   /* ============================================================
-     RESULTS — date din URL sau fallback demo
-     ============================================================ */
-  function buildResults() {
-    const defaultMatches = [
-      {a:"BRA", sa:3, b:"MAR", sb:1, grp:"C", note:"Vinícius x2 · Rodrygo"},
-      {a:"ESP", sa:2, b:"KSA", sb:0, grp:"H", note:"Yamal · Pedri"},
-      {a:"GER", sa:1, b:"ECU", sb:1, grp:"E", note:"Wirtz · Valencia"},
-      {a:"POR", sa:4, b:"UZB", sb:0, grp:"K", note:"Ronaldo x2 · B. Fernandes · Leão"}
-    ];
-
-    // Construiește meciurile din URL params dacă există
-    const urlMatches = [];
-    for (let i = 0; i <= 3; i++) {
-      if (p.has(`r${i}a`)) {
-        urlMatches.push({
-          a:    get(`r${i}a`,    'TBD'),
-          sa:   getInt(`r${i}sa`, 0),
-          b:    get(`r${i}b`,    'TBD'),
-          sb:   getInt(`r${i}sb`, 0),
-          grp:  get(`r${i}grp`,  '—'),
-          note: get(`r${i}note`, '')
-        });
-      }
-    }
-
-    return {
-      kicker: "Rezultate",
-      sub:    "Ziua precedentă",
-      date:   get('res_date', 'Miercuri, 17 iunie'),
-      matches: urlMatches.length > 0 ? urlMatches : defaultMatches
-    };
-  }
-
-  /* ============================================================
-     DUEL — date din URL sau fallback demo
-     ============================================================ */
-  function buildDuel() {
-    return {
-      kicker: "Meciul zilei",
-      a: {
-        code: get('da',     'ARG'),
-        cap:  get('da_cap', 'L. Messi')
-      },
-      b: {
-        code: get('db',     'FRA'),
-        cap:  get('db_cap', 'K. Mbappé')
-      },
-      date:  get('d_date',  'Duminică, 21 iunie'),
-      time:  get('d_time',  '22:00'),
-      stad:  get('d_stad',  'MetLife Stadium'),
-      city:  get('d_city',  'New York / New Jersey'),
-      grp:   get('d_grp',   '—'),
-      stage: get('d_stage', 'Optimi de finală')
-    };
-  }
-
-  /* ============================================================
      SCHEDULE — date din URL sau fallback demo
      ============================================================ */
   function buildSchedule() {
@@ -132,7 +74,6 @@ window.WC = (function () {
       {t:"01:00", a:"ARG", b:"AUT", stad:"SoFi Stadium",     city:"Los Angeles",      grp:"J"},
       {t:"04:00", a:"BRA", b:"SCO", stad:"Hard Rock Stadium",city:"Miami",            grp:"C"}
     ];
-
     const urlMatches = [];
     for (let i = 0; i <= 3; i++) {
       if (p.has(`s${i}a`)) {
@@ -146,10 +87,69 @@ window.WC = (function () {
         });
       }
     }
-
     return {
       kicker: "Programul de mâine",
       date:   get('sch_date', 'Joi, 18 iunie'),
+      matches: urlMatches.length > 0 ? urlMatches : defaultMatches
+    };
+  }
+
+  /* ============================================================
+     DUEL — rezultatul zilei + mini-clasament (din URL sau demo)
+     ============================================================ */
+  function buildDuel() {
+    const defaultGroup = [
+      {code:"ARG", p:6},
+      {code:"FRA", p:4},
+      {code:"AUT", p:3},
+      {code:"JOR", p:1}
+    ];
+    const urlGroup = [];
+    for (let i = 0; i <= 3; i++) {
+      if (p.has(`g${i}c`)) {
+        urlGroup.push({ code: get(`g${i}c`, 'TBD'), p: getInt(`g${i}p`, 0) });
+      }
+    }
+    return {
+      kicker: "Rezultatul zilei",
+      a: { code: get('da', 'ARG'), cap: get('da_cap', 'L. Messi') },
+      b: { code: get('db', 'FRA'), cap: get('db_cap', 'K. Mbappé') },
+      date:  get('d_date', 'Duminică, 21 iunie'),
+      sa:    getInt('d_sa', 3),
+      sb:    getInt('d_sb', 1),
+      grp:   get('d_grp', 'J'),
+      stage: get('d_stage', 'Faza grupelor · Etapa 3'),
+      group: urlGroup.length > 0 ? urlGroup : defaultGroup
+    };
+  }
+
+  /* ============================================================
+     RESULTS — date din URL sau fallback demo
+     ============================================================ */
+  function buildResults() {
+    const defaultMatches = [
+      {a:"BRA", sa:3, b:"MAR", sb:1, grp:"C", note:"Vinícius x2 · Rodrygo"},
+      {a:"ESP", sa:2, b:"KSA", sb:0, grp:"H", note:"Yamal · Pedri"},
+      {a:"GER", sa:1, b:"ECU", sb:1, grp:"E", note:"Wirtz · Valencia"},
+      {a:"POR", sa:4, b:"UZB", sb:0, grp:"K", note:"Ronaldo x2 · B. Fernandes · Leão"}
+    ];
+    const urlMatches = [];
+    for (let i = 0; i <= 3; i++) {
+      if (p.has(`r${i}a`)) {
+        urlMatches.push({
+          a:    get(`r${i}a`,    'TBD'),
+          sa:   getInt(`r${i}sa`, 0),
+          b:    get(`r${i}b`,    'TBD'),
+          sb:   getInt(`r${i}sb`, 0),
+          grp:  get(`r${i}grp`,  '—'),
+          note: get(`r${i}note`, '')
+        });
+      }
+    }
+    return {
+      kicker: "Rezultate",
+      sub:    "Ziua precedentă",
+      date:   get('res_date', 'Miercuri, 17 iunie'),
       matches: urlMatches.length > 0 ? urlMatches : defaultMatches
     };
   }
@@ -166,7 +166,7 @@ window.WC = (function () {
       {code:"MAR", j:3, v:1, e:0, i:2, gd:"-2", p:3},
       {code:"HAI", j:3, v:0, e:1, i:2, gd:"-4", p:1}
     ],
-    qual: 2
+    qual: 2 // top N highlighted
   };
 
   const topstat = {
@@ -186,9 +186,8 @@ window.WC = (function () {
 
   /* ---- export ---- */
   return {
-    teams:     T,
-    stad:      STAD,
-    host:      "S.U.A. · CANADA · MEXIC",
+    teams: T, stad: STAD,
+    host:  "S.U.A. · CANADA · MEXIC",
     posterType: posterType,   // folosit de app.js pentru a deschide automat posterul corect
     schedule:  buildSchedule(),
     duel:      buildDuel(),
