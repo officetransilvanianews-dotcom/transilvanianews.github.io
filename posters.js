@@ -104,7 +104,7 @@ window.Posters = (function () {
       <div class="cap-col">
         <div class="cap-photo">
           <div class="ph-frame">${isRender
-            ? `<img src="assets/flags/${t.code}.jpg" alt="${t.code}" style="display:block;width:100%;height:100%;object-fit:cover;transform:scale(0.85);transform-origin:center;">`
+            ? `<img src="assets/flags/${t.code}.jpg" alt="${t.code}" style="display:block;width:100%;height:100%;object-fit:cover;">`
             : `<image-slot id="${key(skin, 'duel-ph-' + side)}" shape="rounded" radius="24" placeholder="Foto căpitan ${t.code}"></image-slot>`
           }</div>
           <div class="cap-flag">${isRender
