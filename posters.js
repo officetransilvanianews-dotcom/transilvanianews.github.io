@@ -108,7 +108,7 @@ window.Posters = (function () {
             : `<image-slot id="${key(skin, 'duel-ph-' + side)}" shape="rounded" radius="24" placeholder="Foto căpitan ${t.code}"></image-slot>`
           }</div>
           <div class="cap-flag">${isRender
-            ? `<div style="width:104px;height:104px;border-radius:50%;overflow:hidden;"><img src="assets/players/${t.code}.jpg" alt="${t.code}" style="width:100%;height:100%;object-fit:cover;"></div>`
+            ? `<div style="width:104px;height:104px;border-radius:50%;overflow:hidden;"><img src="assets/players/${t.code}.jpg" alt="${t.code}" style="width:100%;height:100%;object-fit:cover;object-position:top center;"></div>`
             : flag(skin, 'duel-fl-' + side, t.code, 104, true)
           }</div>
         </div>
