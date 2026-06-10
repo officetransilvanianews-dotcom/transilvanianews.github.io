@@ -110,11 +110,11 @@ window.Posters = (function () {
       <div class="cap-col">
         <div class="cap-photo">
           <div class="ph-frame">${isRender
-            ? `<img src="assets/flags/${t.code}.jpg" alt="${t.code}" style="width:100%;height:100%;object-fit:contain;border-radius:24px;background:#111318;">`
+            ? `<img src="assets/flags/${t.code}.jpg" alt="${t.code}" style="width:100%;height:100%;object-fit:contain;border-radius:24px;background:rgba(180,20,20,0.45);">`
             : `<image-slot id="${key(skin, 'duel-ph-' + side)}" shape="rounded" radius="24" placeholder="Foto căpitan ${t.code}"></image-slot>`
           }</div>
           <div class="cap-flag">${isRender
-            ? `<div style="width:104px;height:104px;border-radius:50%;overflow:hidden;"><img src="assets/players/${t.code}.jpg" alt="${t.code}" style="width:100%;height:100%;object-fit:cover;"></div>`
+            ? `<div style="width:104px;height:104px;border-radius:50%;overflow:hidden;border:3px solid rgba(255,255,255,0.3);"><img src="assets/players/${t.code}.jpg" alt="${t.code}" style="width:100%;height:100%;object-fit:cover;"></div>`
             : flag(skin, 'duel-fl-' + side, t.code, 104, true)
           }</div>
         </div>
