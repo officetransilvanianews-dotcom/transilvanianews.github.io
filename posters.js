@@ -1,6 +1,5 @@
 /* ============================================================
    Poster renderers — return HTML for a 1080×1080 .poster
-   v3 — render mode: auto-load assets/flags/ + assets/players/
    ============================================================ */
 window.Posters = (function () {
   const WC = window.WC;
@@ -9,7 +8,7 @@ window.Posters = (function () {
   const trophyImg = (cls) => `<img class="${cls}" src="assets/trophy-a.png" alt="">`;
   const kAccent = () => `<span class="ln"></span>`;
 
-  // detectează render mode (htmlcsstoimage)
+  // render mode: activ când există ?poster= în URL (htmlcsstoimage)
   const isRender = !!(WC && WC.posterType);
 
   const ic = {
@@ -24,13 +23,17 @@ window.Posters = (function () {
     return `<span class="edit${cls ? ' ' + cls : ''}" contenteditable="true" data-k="${key(skin, name)}" spellcheck="false">${text}</span>`;
   }
 
-  // flag circle — render mode: img local; gallery: image-slot
+  // flag cerc — render mode: img local; gallery: image-slot interactiv
   function flag(skin, name, code, size, ring) {
-    const inner = isRender
-      ? `<img src="assets/flags/${code}.jpg" alt="${code}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
-      : `<span class="code" style="font-size:${Math.max(11, Math.round(size * 0.34))}px">${code}</span>
-         <image-slot id="${key(skin, name)}" shape="circle" placeholder="${code}"></image-slot>`;
-    return `<div class="flagdisc${ring ? ' ring' : ''}" style="width:${size}px;height:${size}px;overflow:hidden;">${inner}</div>`;
+    if (isRender) {
+      return `<div class="flagdisc${ring ? ' ring' : ''}" style="width:${size}px;height:${size}px;overflow:hidden;">
+        <img src="assets/flags/${code}.jpg" alt="${code}" style="width:100%;height:100%;object-fit:cover;">
+      </div>`;
+    }
+    return `<div class="flagdisc${ring ? ' ring' : ''}" style="width:${size}px;height:${size}px">
+      <span class="code" style="font-size:${Math.max(11, Math.round(size * 0.34))}px">${code}</span>
+      <image-slot id="${key(skin, name)}" shape="circle" placeholder="${code}"></image-slot>
+    </div>`;
   }
 
   function tnLogo() {
@@ -100,8 +103,8 @@ window.Posters = (function () {
     const col = (side, t) => `
       <div class="cap-col">
         <div class="cap-photo">
-          <div class="ph-frame" style="${isRender ? 'background:#1a1a2e;' : ''}">${isRender
-            ? `<img src="assets/flags/${t.code}.jpg" alt="${t.code}" style="width:100%;height:100%;object-fit:contain;border-radius:24px;">`
+          <div class="ph-frame">${isRender
+            ? `<img src="assets/flags/${t.code}.jpg" alt="${t.code}" style="width:100%;height:100%;object-fit:cover;border-radius:24px;">`
             : `<image-slot id="${key(skin, 'duel-ph-' + side)}" shape="rounded" radius="24" placeholder="Foto căpitan ${t.code}"></image-slot>`
           }</div>
           <div class="cap-flag">${isRender
@@ -121,7 +124,9 @@ window.Posters = (function () {
       <div class="duel-grid">
         ${col('a', d.a)}
         <div class="vs-col">
-          <div class="vsball" style="display:flex;align-items:center;justify-content:center;"><img src="assets/trophy-a.png" alt="" style="height:172px;width:auto;filter:drop-shadow(0 6px 22px rgba(0,0,0,.7));"></div>
+          <div class="vsball" style="display:flex;align-items:center;justify-content:center;">
+            <img src="assets/trophy-a.png" alt="" style="height:172px;width:auto;filter:drop-shadow(0 6px 22px rgba(0,0,0,.7));">
+          </div>
           <div class="vs">VS</div>
           <div class="when">
             <span class="pill solid datepill tnum">${ed(skin, 'duel-time', d.time)}</span>
