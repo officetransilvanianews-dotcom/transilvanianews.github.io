@@ -1,35 +1,45 @@
 /* ============================================================
    Poster renderers — return HTML for a 1080×1080 .poster
+   v3 — render mode: auto-load assets/flags/ + assets/players/
    ============================================================ */
 window.Posters = (function () {
   const WC = window.WC;
   const M = window.Motifs;
   const tn = (c) => (WC.teams[c] || {}).n || c;
-  const ballImg = (px) => `<img class="ball-img" src="assets/ball2.png" alt="" width="${px}" height="${px}">`;
   const trophyImg = (cls) => `<img class="${cls}" src="assets/trophy-a.png" alt="">`;
   const kAccent = () => `<span class="ln"></span>`;
 
-  // tiny inline icons (Lucide-style, 2px)
+  // detectează render mode (htmlcsstoimage)
+  const isRender = !!(WC && WC.posterType);
+
+  // tiny inline icons
   const ic = {
     pin: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>',
     clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
     bell: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>'
   };
 
-  let _k = 0;
   const key = (skin, name) => `${skin}-${name}`;
 
-  // editable text span
   function ed(skin, name, text, cls) {
     return `<span class="edit${cls ? ' ' + cls : ''}" contenteditable="true" data-k="${key(skin, name)}" spellcheck="false">${text}</span>`;
   }
 
-  // circular flag slot
+  // circular flag — render mode: img local; gallery mode: image-slot interactiv
   function flag(skin, name, code, size, ring) {
-    return `<div class="flagdisc${ring ? ' ring' : ''}" style="width:${size}px;height:${size}px">
-      <span class="code" style="font-size:${Math.max(11, Math.round(size * 0.34))}px">${code}</span>
-      <image-slot id="${key(skin, name)}" shape="circle" placeholder="${code}"></image-slot>
-    </div>`;
+    const inner = isRender
+      ? `<img src="assets/flags/${code}.jpg" alt="${code}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`
+      : `<span class="code" style="font-size:${Math.max(11, Math.round(size * 0.34))}px">${code}</span>
+         <image-slot id="${key(skin, name)}" shape="circle" placeholder="${code}"></image-slot>`;
+    return `<div class="flagdisc${ring ? ' ring' : ''}" style="width:${size}px;height:${size}px">${inner}</div>`;
+  }
+
+  // player photo — render mode: img local; gallery mode: image-slot interactiv
+  function playerPhoto(skin, name, code, radius) {
+    if (isRender) {
+      return `<img src="assets/players/${code}.jpg" alt="${code}" style="width:100%;height:100%;object-fit:cover;border-radius:${radius || 24}px;">`;
+    }
+    return `<image-slot id="${key(skin, name)}" shape="rounded" radius="${radius || 24}" placeholder="Foto căpitan ${code}"></image-slot>`;
   }
 
   function tnLogo() {
@@ -99,7 +109,7 @@ window.Posters = (function () {
     const col = (side, t) => `
       <div class="cap-col">
         <div class="cap-photo">
-          <div class="ph-frame"><image-slot id="${key(skin, 'duel-ph-' + side)}" shape="rounded" radius="24" placeholder="Foto căpitan ${t.code}"></image-slot></div>
+          <div class="ph-frame">${playerPhoto(skin, 'duel-ph-' + side, t.code, 24)}</div>
           <div class="cap-flag">${flag(skin, 'duel-fl-' + side, t.code, 104, true)}</div>
         </div>
         <div class="cap-name">${ed(skin, 'duel-nm-' + side, tn(t.code))}</div>
@@ -220,6 +230,7 @@ window.Posters = (function () {
         </div>
       </div>`;
     }).join('');
+    const topCode = d.rows[0] ? d.rows[0].code : 'ARG';
     const inner = `
       ${header(skin)}
       <div class="head-block">
@@ -230,7 +241,10 @@ window.Posters = (function () {
         <div class="stat-list">${rows}</div>
         <div class="stat-photo">
           <div class="glow"></div>
-          <image-slot id="${key(skin, 'ts-photo')}" shape="rounded" radius="18" placeholder="Foto jucător (decupat / fundal transparent)"></image-slot>
+          ${isRender
+            ? `<img src="assets/players/${topCode}.jpg" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:18px;">`
+            : `<image-slot id="${key(skin, 'ts-photo')}" shape="rounded" radius="18" placeholder="Foto jucător (decupat / fundal transparent)"></image-slot>`
+          }
         </div>
       </div>
       ${footer(skin, 'goluri marcate · faza grupelor')}`;
