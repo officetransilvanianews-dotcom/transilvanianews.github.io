@@ -35,7 +35,7 @@
   #hook .top .logo{ font-size:30px; filter:drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
   #hook .cat{ display:inline-block; background:var(--red); padding:12px 26px; font-weight:900; font-size:24px; letter-spacing:.14em; color:#fff; margin-top:6px; }
   #hook .bottom{ position:absolute; left:60px; right:60px; bottom:56px; display:flex; flex-direction:column; align-items:flex-start; }
-  #hook .tline{ display:inline-block; background:var(--red); padding:12px 26px; font-weight:900; font-size:42px; line-height:1; color:#fff; margin-top:9px; }
+  #hook .tline{ display:inline-block; background:var(--red); padding:12px 26px; font-weight:900; font-size:42px; line-height:1; color:#fff; margin-top:9px; white-space:nowrap; }
   #hook .tline:first-child{ margin-top:0; }
   #hook .tag{ display:inline-block; background:#fff; padding:12px 28px; font-weight:900; font-size:46px; line-height:1; color:var(--red); margin-top:10px; }
   #hook .sub{ margin-top:34px; font-family:'Poppins'; font-weight:500; font-size:33px; line-height:1.45; color:rgba(255,255,255,.94); max-width:900px; text-shadow:0 2px 18px rgba(0,0,0,.45); }
@@ -179,10 +179,12 @@
     if(img) document.getElementById("hkHero").style.backgroundImage="url('"+img.replace(/'/g,"%27")+"')";
     document.getElementById("hkCat").textContent=g("cat","POLITICĂ").toUpperCase();
     var wrap=document.getElementById("hkTitle");
-    g("title","Titlul știrii").split("~~~").forEach(function(l,i){
-      if(!l.trim()) return;
+    var lines=g("title","Titlul știrii").split("~~~").map(function(s){return s.trim();}).filter(Boolean);
+    var longest=lines.reduce(function(m,l){return Math.max(m,l.length);},1);
+    var fs=Math.max(26, Math.min(46, Math.round(1400/longest)));
+    lines.forEach(function(l){
       var d=document.createElement("div"); d.className="tline mont skew";
-      d.textContent=l.trim().toUpperCase(); wrap.appendChild(d);
+      d.style.fontSize=fs+"px"; d.textContent=l.toUpperCase(); wrap.appendChild(d);
     });
     document.getElementById("hkSub").textContent=g("sub","");
     document.getElementById("hkHandle").textContent=handle;
