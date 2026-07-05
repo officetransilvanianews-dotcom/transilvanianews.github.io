@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>Transilvania News · Carousel 1A</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;0,800;0,900;1,800;1,900&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{ --red:#E62B26; --ink:#16121A; --muted:#6E6873; --line:#F0EAEB; --dot:#E8E0E2; --site:#B9B2B6; --W:1080px; }
+  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; -webkit-font-smoothing:antialiased; }
+  html,body{ width:var(--W); height:var(--W); overflow:hidden; background:#1B1518; font-family:'Poppins',sans-serif; }
+  .stage{ position:relative; width:var(--W); height:var(--W); overflow:hidden; }
+  .hide{ display:none !important; }
+  .mont{ font-family:'Montserrat',sans-serif; }
+  .skew{ transform:skewX(-8deg); }
+  .icons{ display:inline-flex; align-items:center; gap:14px; }
+
+  /* ---------------- HOOK ---------------- */
+  #hook{ position:absolute; inset:0; background:#1B1518; }
+  #hook .hero{ position:absolute; inset:0; background-size:cover; background-position:center; }
+  #hook .grad{ position:absolute; left:0; right:0; bottom:0; height:74%;
+    background:linear-gradient(to top, rgba(16,10,12,.96) 16%, rgba(16,10,12,.62) 52%, rgba(16,10,12,0) 100%); }
+  #hook .top{ position:absolute; top:52px; left:60px; right:60px; display:flex; align-items:center; justify-content:space-between; }
+  #hook .top img{ height:52px; filter:drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
+  #hook .cat{ display:inline-block; background:var(--red); padding:12px 26px; font-weight:900; font-size:24px; letter-spacing:.14em; color:#fff; }
+  #hook .bottom{ position:absolute; left:60px; right:60px; bottom:56px; display:flex; flex-direction:column; align-items:flex-start; }
+  #hook .tline{ display:inline-block; background:var(--red); padding:14px 30px; font-weight:900; font-size:52px; line-height:1; color:#fff; margin-top:10px; }
+  #hook .tline:first-child{ margin-top:0; }
+  #hook .tag{ display:inline-block; background:#fff; padding:12px 28px; font-weight:900; font-size:46px; line-height:1; color:var(--red); margin-top:10px; }
+  #hook .sub{ margin-top:34px; font-family:'Poppins'; font-weight:500; font-size:33px; line-height:1.45; color:rgba(255,255,255,.94); max-width:900px; text-shadow:0 2px 18px rgba(0,0,0,.45); }
+  #hook .foot{ margin-top:40px; width:100%; display:flex; align-items:center; justify-content:space-between; }
+  #hook .handle{ font-weight:600; font-size:25px; color:rgba(255,255,255,.9); }
+  #hook .swipe{ font-weight:600; font-size:24px; letter-spacing:.16em; color:#fff; }
+  #hook .swipe b{ font-family:'Montserrat'; font-weight:900; font-style:italic; font-size:30px; color:#FF6B60; }
+
+  /* ---------------- IDEA ---------------- */
+  #idea{ position:absolute; inset:0; background:#fff; display:flex; flex-direction:column; padding:64px 72px; }
+  #idea .deco{ position:absolute; right:-40px; bottom:120px; width:300px; height:300px;
+    background-image:radial-gradient(rgba(230,43,38,.14) 4px, transparent 4.6px); background-size:26px 26px; transform:rotate(-8deg); }
+  #idea .head{ display:flex; align-items:center; justify-content:space-between; }
+  #idea .head img{ height:44px; }
+  #idea .kick{ font-weight:700; font-size:23px; letter-spacing:.2em; color:var(--red); display:inline-flex; align-items:center; gap:14px; }
+  #idea .kick i{ width:14px; height:14px; background:var(--red); display:inline-block; transform:skewX(-8deg); }
+  #idea .body{ flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; gap:28px; position:relative; }
+  #idea .num{ font-family:'Montserrat'; font-weight:900; font-style:italic; font-size:190px; line-height:.8; color:var(--red); letter-spacing:-.03em; }
+  #idea .h{ font-weight:600; font-size:45px; line-height:1.35; color:var(--ink); max-width:900px; }
+  #idea .d{ font-weight:400; font-size:30px; line-height:1.5; color:var(--muted); max-width:860px; }
+  #idea .foot{ border-top:2px solid var(--line); padding-top:26px; display:flex; align-items:center; justify-content:space-between; }
+  #idea .site{ font-weight:600; font-size:23px; color:var(--site); }
+  #idea .dots{ display:flex; gap:10px; }
+  #idea .dots span{ width:14px; height:9px; border-radius:999px; background:var(--dot); display:block; }
+  #idea .dots span.on{ width:36px; background:var(--red); }
+  #idea .handle{ font-weight:600; font-size:23px; color:var(--muted); }
+
+  /* ---------------- FOLLOW ---------------- */
+  #follow{ position:absolute; inset:0; background:linear-gradient(135deg, #E62B26 0%, #A31310 62%, #7E0C0A 100%);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; padding:80px; }
+  #follow .d1{ position:absolute; top:-60px; left:-60px; width:340px; height:340px;
+    background-image:radial-gradient(rgba(255,255,255,.18) 4px, transparent 4.6px); background-size:26px 26px; transform:rotate(-8deg); }
+  #follow .d2{ position:absolute; bottom:-70px; right:-50px; width:380px; height:380px;
+    background-image:radial-gradient(rgba(0,0,0,.16) 4px, transparent 4.6px); background-size:26px 26px; transform:rotate(-8deg); }
+  #follow .col{ display:flex; flex-direction:column; align-items:center; gap:44px; position:relative; }
+  #follow .col > img{ width:640px; filter:drop-shadow(0 10px 30px rgba(0,0,0,.3)); }
+  #follow .rule{ width:120px; height:4px; background:rgba(255,255,255,.8); }
+  #follow .claim{ display:flex; flex-direction:column; align-items:center; gap:6px; }
+  #follow .claim span{ font-weight:500; font-size:42px; color:#fff; }
+  #follow .claim b{ font-weight:700; }
+  #follow .btn{ display:inline-flex; align-items:center; gap:20px; border:2.5px solid rgba(255,255,255,.9); border-radius:999px; padding:24px 48px; }
+  #follow .btn span.sep{ width:2px; height:34px; background:rgba(255,255,255,.5); }
+  #follow .btn span.t{ font-weight:600; font-size:30px; letter-spacing:.14em; color:#fff; }
+  #follow .social{ font-weight:600; font-size:26px; color:rgba(255,255,255,.9); }
+  #follow .social .dot{ color:rgba(255,255,255,.6); }
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- ===== HOOK ===== -->
+  <section id="hook" class="hide">
+    <div class="hero" id="hkHero"></div>
+    <div class="grad"></div>
+    <div class="top">
+      <img src="assets/logo-transilvania.png" alt="Transilvania News">
+      <span class="cat mont skew" id="hkCat">POLITICĂ</span>
+    </div>
+    <div class="bottom">
+      <div id="hkTitle"></div>
+      <p class="sub" id="hkSub"></p>
+      <div class="foot">
+        <span class="handle icons">
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"></rect><path d="M16 11.37a4 4 0 1 1-7.914 1.174A4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          <span id="hkHandle">@transilvanianewsofficial</span>
+        </span>
+        <span class="swipe icons" id="hkSwipe"><span>GLISEAZĂ</span><b>›››</b></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== IDEA ===== -->
+  <section id="idea" class="hide">
+    <div class="deco"></div>
+    <div class="head">
+      <img src="assets/logo-transilvania.png" alt="Transilvania News">
+      <span class="kick"><i></i><span id="idKick">PE SCURT · POLITICĂ</span></span>
+    </div>
+    <div class="body">
+      <span class="num" id="idNum">01</span>
+      <p class="h" id="idHead"></p>
+      <p class="d" id="idDetail"></p>
+    </div>
+    <div class="foot">
+      <span class="site">transilvanianews.ro</span>
+      <span class="dots" id="idDots"></span>
+      <span class="handle icons">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"></rect><path d="M16 11.37a4 4 0 1 1-7.914 1.174A4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        <span id="idHandle">@transilvanianewsofficial</span>
+      </span>
+    </div>
+  </section>
+
+  <!-- ===== FOLLOW ===== -->
+  <section id="follow" class="hide">
+    <div class="d1"></div><div class="d2"></div>
+    <div class="col">
+      <img src="assets/logo-transilvania.png" alt="Transilvania News">
+      <div class="rule"></div>
+      <div class="claim">
+        <span>Publicăm doar ce <b>contează</b>.</span>
+        <span>Doar știri <b>verificate</b>.</span>
+      </div>
+      <div class="btn">
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.7 21a2 2 0 0 1-3.4 0"></path></svg>
+        <span class="sep"></span>
+        <span class="t">URMĂREȘTE PAGINA</span>
+      </div>
+      <span class="social icons">
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"></rect><path d="M16 11.37a4 4 0 1 1-7.914 1.174A4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+        <span id="fHandle">@transilvanianewsofficial</span><span class="dot">·</span><span>transilvanianews.ro</span>
+      </span>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  var p = new URLSearchParams(location.search);
+  function g(k,d){ var v=p.get(k); return (v===null)?(d||""):v; }
+  var slide = g("slide","hook").toLowerCase();
+  var handle = g("handle","@transilvanianewsofficial");
+
+  document.getElementById(slide==="idea"?"idea":slide==="follow"?"follow":"hook").classList.remove("hide");
+
+  if(slide==="hook"){
+    var img=g("img","");
+    if(img) document.getElementById("hkHero").style.backgroundImage="url('"+img.replace(/'/g,"%27")+"')";
+    document.getElementById("hkCat").textContent=g("cat","POLITICĂ").toUpperCase();
+    var wrap=document.getElementById("hkTitle");
+    g("title","Titlul știrii").split("~~~").forEach(function(l,i){
+      if(!l.trim()) return;
+      var d=document.createElement("div"); d.className="tline mont skew";
+      d.style.marginLeft=(i*44)+"px"; d.textContent=l.trim().toUpperCase(); wrap.appendChild(d);
+    });
+    var tag=g("tag","");
+    if(tag.trim()){ var t=document.createElement("div"); t.className="tag mont skew";
+      t.style.marginLeft=(g("title","").split("~~~").length*44)+"px"; t.textContent=tag.trim().toUpperCase(); wrap.appendChild(t); }
+    document.getElementById("hkSub").textContent=g("sub","");
+    document.getElementById("hkHandle").textContent=handle;
+    if(g("swipe","1")==="0") document.getElementById("hkSwipe").style.display="none";
+  }
+
+  if(slide==="idea"){
+    document.getElementById("idKick").textContent="PE SCURT · "+g("cat","POLITICĂ").toUpperCase();
+    document.getElementById("idNum").textContent=g("n","01");
+    document.getElementById("idHead").textContent=g("head","");
+    var det=g("detail",""); var de=document.getElementById("idDetail");
+    if(det.trim()) de.textContent=det; else de.style.display="none";
+    document.getElementById("idHandle").textContent=handle;
+    var total=parseInt(g("dtotal","4"),10)||4, active=parseInt(g("dactive","2"),10)||2;
+    var dots=document.getElementById("idDots");
+    for(var i=1;i<=total;i++){ var s=document.createElement("span"); if(i===active) s.className="on"; dots.appendChild(s); }
+  }
+
+  if(slide==="follow"){ document.getElementById("fHandle").textContent=handle; }
+})();
+</script>
+</body>
+</html>
