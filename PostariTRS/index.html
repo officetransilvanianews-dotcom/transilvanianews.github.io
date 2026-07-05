@@ -17,14 +17,23 @@
   .skew{ transform:skewX(-8deg); }
   .icons{ display:inline-flex; align-items:center; gap:14px; }
 
+  /* ---------------- LOGO (CSS, no image) ---------------- */
+  .logo{ display:inline-flex; flex-direction:column; line-height:1; font-family:'Montserrat',sans-serif; }
+  .logo .l1{ display:inline-block; background:var(--red); color:#fff; font-weight:900; font-style:italic;
+    font-size:1em; letter-spacing:.01em; padding:.18em .30em .12em; transform:skewX(-8deg); }
+  .logo .l2{ align-self:flex-end; background:#fff; color:var(--red); font-weight:900; font-style:italic;
+    font-size:.60em; letter-spacing:.02em; padding:.06em .34em; transform:skewX(-8deg); margin-top:-.05em; margin-right:.06em; }
+  .logo.on-red .l1{ background:#fff; color:var(--red); }
+  .logo.on-red .l2{ background:var(--red); color:#fff; }
+
   /* ---------------- HOOK ---------------- */
   #hook{ position:absolute; inset:0; background:#1B1518; }
   #hook .hero{ position:absolute; inset:0; background-size:cover; background-position:center; }
   #hook .grad{ position:absolute; left:0; right:0; bottom:0; height:74%;
     background:linear-gradient(to top, rgba(16,10,12,.96) 16%, rgba(16,10,12,.62) 52%, rgba(16,10,12,0) 100%); }
-  #hook .top{ position:absolute; top:52px; left:60px; right:60px; display:flex; align-items:center; justify-content:space-between; }
-  #hook .top img{ height:130px; filter:drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
-  #hook .cat{ display:inline-block; background:var(--red); padding:12px 26px; font-weight:900; font-size:24px; letter-spacing:.14em; color:#fff; }
+  #hook .top{ position:absolute; top:52px; left:60px; right:60px; display:flex; align-items:flex-start; justify-content:space-between; }
+  #hook .top .logo{ font-size:46px; filter:drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
+  #hook .cat{ display:inline-block; background:var(--red); padding:12px 26px; font-weight:900; font-size:24px; letter-spacing:.14em; color:#fff; margin-top:6px; }
   #hook .bottom{ position:absolute; left:60px; right:60px; bottom:56px; display:flex; flex-direction:column; align-items:flex-start; }
   #hook .tline{ display:inline-block; background:var(--red); padding:14px 30px; font-weight:900; font-size:52px; line-height:1; color:#fff; margin-top:10px; }
   #hook .tline:first-child{ margin-top:0; }
@@ -39,9 +48,9 @@
   #idea{ position:absolute; inset:0; background:#fff; display:flex; flex-direction:column; padding:64px 72px; }
   #idea .deco{ position:absolute; right:-40px; bottom:120px; width:300px; height:300px;
     background-image:radial-gradient(rgba(230,43,38,.14) 4px, transparent 4.6px); background-size:26px 26px; transform:rotate(-8deg); }
-  #idea .head{ display:flex; align-items:center; justify-content:space-between; }
-  #idea .head img{ height:44px; }
-  #idea .kick{ font-weight:700; font-size:23px; letter-spacing:.2em; color:var(--red); display:inline-flex; align-items:center; gap:14px; }
+  #idea .head{ display:flex; align-items:flex-start; justify-content:space-between; }
+  #idea .head .logo{ font-size:32px; }
+  #idea .kick{ font-weight:700; font-size:23px; letter-spacing:.2em; color:var(--red); display:inline-flex; align-items:center; gap:14px; margin-top:8px; }
   #idea .kick i{ width:14px; height:14px; background:var(--red); display:inline-block; transform:skewX(-8deg); }
   #idea .body{ flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; gap:28px; position:relative; }
   #idea .num{ font-family:'Montserrat'; font-weight:900; font-style:italic; font-size:190px; line-height:.8; color:var(--red); letter-spacing:-.03em; }
@@ -62,7 +71,7 @@
   #follow .d2{ position:absolute; bottom:-70px; right:-50px; width:380px; height:380px;
     background-image:radial-gradient(rgba(0,0,0,.16) 4px, transparent 4.6px); background-size:26px 26px; transform:rotate(-8deg); }
   #follow .col{ display:flex; flex-direction:column; align-items:center; gap:44px; position:relative; }
-  #follow .col > img{ width:640px; filter:drop-shadow(0 10px 30px rgba(0,0,0,.3)); }
+  #follow .col .logo{ font-size:104px; filter:drop-shadow(0 10px 30px rgba(0,0,0,.3)); }
   #follow .rule{ width:120px; height:4px; background:rgba(255,255,255,.8); }
   #follow .claim{ display:flex; flex-direction:column; align-items:center; gap:6px; }
   #follow .claim span{ font-weight:500; font-size:42px; color:#fff; }
@@ -82,7 +91,7 @@
     <div class="hero" id="hkHero"></div>
     <div class="grad"></div>
     <div class="top">
-      <img src="assets/logo-transilvania.png" alt="Transilvania News">
+      <span class="logo"><span class="l1">TRANSILVANIA</span><span class="l2">NEWS</span></span>
       <span class="cat mont skew" id="hkCat">POLITICĂ</span>
     </div>
     <div class="bottom">
@@ -103,7 +112,7 @@
   <section id="idea" class="hide">
     <div class="deco"></div>
     <div class="head">
-      <img src="assets/logo-transilvania.png" alt="Transilvania News">
+      <span class="logo"><span class="l1">TRANSILVANIA</span><span class="l2">NEWS</span></span>
       <span class="kick"><i></i><span id="idKick">PE SCURT · POLITICĂ</span></span>
     </div>
     <div class="body">
@@ -126,7 +135,7 @@
   <section id="follow" class="hide">
     <div class="d1"></div><div class="d2"></div>
     <div class="col">
-      <img src="assets/logo-transilvania.png" alt="Transilvania News">
+      <span class="logo on-red"><span class="l1">TRANSILVANIA</span><span class="l2">NEWS</span></span>
       <div class="rule"></div>
       <div class="claim">
         <span>Publicăm doar ce <b>contează</b>.</span>
@@ -172,7 +181,7 @@
     document.getElementById("hkSub").textContent=g("sub","");
     document.getElementById("hkHandle").textContent=handle;
     if(g("swipe","1")==="0") document.getElementById("hkSwipe").style.display="none";
-    var lh=g("lh",""); if(lh) document.querySelector("#hook .top img").style.height=lh+"px";
+    var lg=g("lg",""); if(lg) document.querySelector("#hook .top .logo").style.fontSize=lg+"px";
   }
 
   if(slide==="idea"){
