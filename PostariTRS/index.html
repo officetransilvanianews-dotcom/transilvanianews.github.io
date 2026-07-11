@@ -8,10 +8,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;0,800;0,900;1,800;1,900&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,600&display=swap" rel="stylesheet">
 <style>
-  :root{ --red:#E62B26; --ink:#16121A; --muted:#6E6873; --line:#F0EAEB; --dot:#E8E0E2; --site:#B9B2B6; --W:1080px; }
+  :root{ --red:#E62B26; --ink:#16121A; --muted:#6E6873; --line:#F0EAEB; --dot:#E8E0E2; --site:#B9B2B6; --W:1080px; --H:1350px; }
   *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; -webkit-font-smoothing:antialiased; }
-  html,body{ width:var(--W); height:var(--W); overflow:hidden; background:#1B1518; font-family:'Poppins',sans-serif; }
-  .stage{ position:relative; width:var(--W); height:var(--W); overflow:hidden; }
+  html,body{ width:var(--W); height:var(--H); overflow:hidden; background:#1B1518; font-family:'Poppins',sans-serif; }
+  .stage{ position:relative; width:var(--W); height:var(--H); overflow:hidden; }
   .hide{ display:none !important; }
   .mont{ font-family:'Montserrat',sans-serif; }
   .skew{ transform:skewX(-8deg); }
@@ -52,10 +52,10 @@
   #idea .head .logo{ font-size:32px; }
   #idea .kick{ font-weight:700; font-size:23px; letter-spacing:.2em; color:var(--red); display:inline-flex; align-items:center; gap:14px; margin-top:8px; }
   #idea .kick i{ width:14px; height:14px; background:var(--red); display:inline-block; transform:skewX(-8deg); }
-  #idea .body{ flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; gap:22px; position:relative; }
-  #idea .num{ font-family:'Montserrat'; font-weight:900; font-style:italic; font-size:132px; line-height:.8; color:var(--red); letter-spacing:-.03em; }
-  #idea .h{ font-weight:600; font-size:42px; line-height:1.32; color:var(--ink); max-width:920px; }
-  #idea .d{ font-weight:500; font-size:34px; line-height:1.45; color:#565058; max-width:900px; }
+  #idea .body{ flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; gap:30px; position:relative; }
+  #idea .num{ font-family:'Montserrat'; font-weight:900; font-style:italic; font-size:158px; line-height:.8; color:var(--red); letter-spacing:-.03em; }
+  #idea .h{ font-weight:600; font-size:47px; line-height:1.32; color:var(--ink); max-width:940px; }
+  #idea .d{ font-weight:500; font-size:37px; line-height:1.45; color:#565058; max-width:920px; }
   #idea .foot{ border-top:2px solid var(--line); padding-top:26px; display:flex; align-items:center; justify-content:space-between; }
   #idea .site{ font-weight:600; font-size:23px; color:var(--site); }
   #idea .dots{ display:flex; gap:10px; }
@@ -169,6 +169,7 @@
 (function(){
   var p = new URLSearchParams(location.search);
   function g(k,d){ var v=p.get(k); return (v===null)?(d||""):v; }
+  var H=parseInt(g("h","1350"),10)||1350; document.documentElement.style.setProperty("--H", H+"px");
   var slide = g("slide","hook").toLowerCase();
   var handle = g("handle","@transilvanianewsofficial");
 
