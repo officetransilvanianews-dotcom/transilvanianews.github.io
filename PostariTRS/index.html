@@ -28,7 +28,8 @@
 
   /* ---------------- HOOK ---------------- */
   #hook{ position:absolute; inset:0; background:#1B1518; }
-  #hook .hero{ position:absolute; inset:0; background-size:cover; background-position:center; }
+  #hook .hero{ position:absolute; inset:0; background-size:cover; background-position:center; background-color:#141414; filter:blur(34px) brightness(.42); transform:scale(1.18); }
+  #hook .heroSharp{ position:absolute; inset:0; background-size:contain; background-position:center 36%; background-repeat:no-repeat; }
   #hook .grad{ position:absolute; left:0; right:0; bottom:0; height:74%;
     background:linear-gradient(to top, rgba(16,10,12,.96) 16%, rgba(16,10,12,.62) 52%, rgba(16,10,12,0) 100%); }
   #hook .top{ position:absolute; top:56px; left:84px; right:84px; display:flex; align-items:flex-start; justify-content:space-between; }
@@ -94,6 +95,7 @@
   <!-- ===== HOOK ===== -->
   <section id="hook" class="hide">
     <div class="hero" id="hkHero"></div>
+    <div class="heroSharp" id="hkHeroSharp"></div>
     <div class="grad"></div>
     <div class="top">
       <span class="logo"><span class="l1">TRANSILVANIA</span><span class="l2">NEWS</span></span>
@@ -177,7 +179,7 @@
 
   if(slide==="hook"){
     var img=g("img","");
-    if(img) document.getElementById("hkHero").style.backgroundImage="url('"+img.replace(/'/g,"%27")+"')";
+    if(img){ var _u="url('"+img.replace(/'/g,"%27")+"')"; document.getElementById("hkHero").style.backgroundImage=_u; document.getElementById("hkHeroSharp").style.backgroundImage=_u; }
     document.getElementById("hkCat").textContent=g("cat","POLITICĂ").toUpperCase();
     var wrap=document.getElementById("hkTitle");
     var lines=g("title","Titlul știrii").split("~~~").map(function(s){return s.trim();}).filter(Boolean);
@@ -190,6 +192,7 @@
     document.getElementById("hkSub").textContent=g("sub","");
     document.getElementById("hkHandle").textContent=handle;
     if(g("swipe","1")==="0") document.getElementById("hkSwipe").style.display="none";
+    var ctaTxt=g("cta",""); if(ctaTxt){ document.getElementById("hkSwipe").textContent=ctaTxt.toUpperCase(); }
     var lg=g("lg",""); if(lg) document.querySelector("#hook .top .logo").style.fontSize=lg+"px";
   }
 
