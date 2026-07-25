@@ -180,9 +180,12 @@
     if(img) document.getElementById("hkHero").style.backgroundImage="url('"+img.replace(/'/g,"%27")+"')";
     document.getElementById("hkCat").textContent=g("cat","POLITICĂ").toUpperCase();
     var wrap=document.getElementById("hkTitle");
-    var lines=g("title","Titlul știrii").split("~~~").map(function(s){return s.trim();}).filter(Boolean);
+    var raw=g("title","Titlul știrii").replace(/~~~/g," ").replace(/\s+/g," ").trim();
+    var words=raw.split(" "), lines=[], cur="";
+    for(var wi=0;wi<words.length;wi++){ var w=words[wi]; if(cur && (cur.length+1+w.length)>30){ lines.push(cur); cur=w; } else cur=cur?cur+" "+w:w; }
+    if(cur) lines.push(cur);
     var longest=lines.reduce(function(m,l){return Math.max(m,l.length);},1);
-    var fs=Math.max(26, Math.min(48, Math.round(1300/longest)));
+    var fs=Math.max(30, Math.min(48, Math.round(1300/longest)));
     lines.forEach(function(l){
       var d=document.createElement("div"); d.className="tline mont skew";
       d.style.fontSize=fs+"px"; d.textContent=l.toUpperCase(); wrap.appendChild(d);
