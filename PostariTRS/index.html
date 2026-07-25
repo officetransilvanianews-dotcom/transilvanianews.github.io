@@ -38,7 +38,7 @@
   #hook .tline{ display:inline-block; background:var(--red); padding:12px 26px; font-weight:900; font-size:42px; line-height:1; color:#fff; margin-top:9px; white-space:nowrap; }
   #hook .tline:first-child{ margin-top:0; }
   #hook .tag{ display:inline-block; background:#fff; padding:12px 28px; font-weight:900; font-size:46px; line-height:1; color:var(--red); margin-top:10px; }
-  #hook .sub{ margin-top:34px; font-family:'Poppins'; font-weight:500; font-size:33px; line-height:1.45; color:rgba(255,255,255,.94); max-width:900px; text-shadow:0 2px 18px rgba(0,0,0,.45); }
+  #hook .sub{ margin-top:32px; font-family:'Poppins'; font-weight:500; font-size:37px; line-height:1.42; color:rgba(255,255,255,.96); max-width:905px; text-shadow:0 2px 18px rgba(0,0,0,.45); }
   #hook .foot{ margin-top:40px; width:100%; display:flex; align-items:center; justify-content:space-between; }
   #hook .handle{ font-weight:600; font-size:25px; color:rgba(255,255,255,.9); }
   #hook .swipe{ font-weight:600; font-size:24px; letter-spacing:.16em; color:#fff; }
@@ -182,7 +182,7 @@
     var wrap=document.getElementById("hkTitle");
     var lines=g("title","Titlul știrii").split("~~~").map(function(s){return s.trim();}).filter(Boolean);
     var longest=lines.reduce(function(m,l){return Math.max(m,l.length);},1);
-    var fs=Math.max(24, Math.min(44, Math.round(1200/longest)));
+    var fs=Math.max(26, Math.min(48, Math.round(1300/longest)));
     lines.forEach(function(l){
       var d=document.createElement("div"); d.className="tline mont skew";
       d.style.fontSize=fs+"px"; d.textContent=l.toUpperCase(); wrap.appendChild(d);
