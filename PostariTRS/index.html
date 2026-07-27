@@ -29,8 +29,10 @@
   /* ---------------- HOOK ---------------- */
   #hook{ position:absolute; inset:0; background:#1B1518; }
   #hook .hero{ position:absolute; inset:0; background-size:cover; background-position:center; }
-  #hook .grad{ position:absolute; left:0; right:0; bottom:0; height:74%;
-    background:linear-gradient(to top, rgba(16,10,12,.96) 16%, rgba(16,10,12,.62) 52%, rgba(16,10,12,0) 100%); }
+  #hook .grad{ position:absolute; left:0; right:0; bottom:0; height:52%;
+    -webkit-backdrop-filter:blur(22px); backdrop-filter:blur(22px);
+    -webkit-mask-image:linear-gradient(to bottom, transparent 0%, #000 30%); mask-image:linear-gradient(to bottom, transparent 0%, #000 30%);
+    background:linear-gradient(to top, rgba(16,10,12,.97) 26%, rgba(16,10,12,.5) 60%, rgba(16,10,12,0) 100%); }
   #hook .top{ position:absolute; top:56px; left:84px; right:84px; display:flex; align-items:flex-start; justify-content:space-between; }
   #hook .top .logo{ font-size:30px; filter:drop-shadow(0 4px 14px rgba(0,0,0,.35)); }
   #hook .cat{ display:inline-block; background:var(--red); padding:12px 26px; font-weight:900; font-size:24px; letter-spacing:.14em; color:#fff; margin-top:6px; }
