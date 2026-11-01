@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1080, initial-scale=1">
+<title>Transilvania News · Pamflet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700;800;900&family=Playfair+Display:wght@800;900&display=swap" rel="stylesheet">
+<style>
+  :root{ --red:#EC1C24; --ink:#111111; --gray:#444046; --W:1080px; --H:1350px; --F:22px; }
+  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; -webkit-font-smoothing:antialiased; }
+  html,body{ width:var(--W); height:var(--H); overflow:hidden; background:var(--red); }
+  .stage{ position:relative; margin:var(--F); width:calc(var(--W) - 2*var(--F)); height:calc(var(--H) - 2*var(--F)); background:#fff; border-radius:30px; display:flex; flex-direction:column; padding:58px 50px 0; }
+  .mont{ font-family:'Montserrat',sans-serif; }
+  .serif{ font-family:'Playfair Display',Georgia,serif; }
+
+  /* header */
+  .head{ display:flex; justify-content:space-between; align-items:flex-start; height:104px; flex:0 0 auto; }
+  .logo{ position:relative; width:362px; height:92px; margin-left:-6px; }
+  .logo .a{ position:absolute; left:0; top:0; width:362px; height:50px; background:var(--red);
+    clip-path:polygon(4% 0,100% 0,96% 100%,0 100%); color:#fff; font:900 35px/50px 'Montserrat',sans-serif; text-align:center; letter-spacing:.005em; }
+  .logo .b{ position:absolute; right:12px; top:50px; width:140px; height:38px; background:var(--ink);
+    clip-path:polygon(7% 0,100% 0,93% 100%,0 100%); color:#fff; font:800 22px/38px 'Montserrat',sans-serif; text-align:center; letter-spacing:.24em; padding-left:.24em; }
+  .badge{ margin-top:8px; height:56px; padding:0 40px; background:var(--red); clip-path:polygon(3.5% 0,100% 0,96.5% 100%,0 100%);
+    color:#fff; font:800 23px/56px "Montserrat",sans-serif; letter-spacing:.3em; white-space:nowrap; min-width:290px; text-align:center; }
+
+  /* body */
+  .main{ flex:1 1 auto; display:flex; flex-direction:column; min-height:0; }
+  .photo{ position:relative; margin-top:34px; height:640px; flex:0 0 auto; background:#e9e7e8 center/cover no-repeat; overflow:hidden;
+    border:12px solid #fff; border-radius:26px; box-shadow:0 0 0 1.5px #E6E0E2, 0 22px 48px rgba(17,17,17,.16); }
+  .ttl{ font-family:'Playfair Display',Georgia,serif; font-weight:900; color:var(--ink); line-height:1.14; letter-spacing:-.005em; }
+  .hl{ background:var(--red); color:#fff; padding:0 .14em; -webkit-box-decoration-break:clone; box-decoration-break:clone; }
+  .sub{ font:500 29px/1.55 'Montserrat',sans-serif; color:var(--gray); }
+  .textbox{ flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; gap:22px; padding:28px 0 26px; }
+
+  .quotewrap{ flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; padding:0 6px 40px; }
+  .qmark{ font-family:'Playfair Display',Georgia,serif; font-weight:900; color:var(--red); font-size:250px; line-height:.75; height:110px; margin-bottom:56px; }
+  .who{ display:flex; align-items:center; gap:22px; margin-top:44px; font:800 26px/1 'Montserrat',sans-serif; letter-spacing:.14em; color:var(--ink); text-transform:uppercase; }
+  .who i{ width:64px; height:5px; background:var(--red); display:block; flex:0 0 auto; }
+
+  /* footer */
+  .foot{ flex:0 0 auto; height:100px; border-top:3px solid var(--ink); display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+  .handle{ display:flex; align-items:center; gap:16px; font:700 26px/1 'Montserrat',sans-serif; color:var(--ink); }
+  .pg{ font:800 26px/1 'Montserrat',sans-serif; color:var(--red); letter-spacing:.06em; }
+
+  /* TikTok 9:16 (h=1920): zone sigure pentru interfata TikTok */
+  .tall .stage{ padding-top:160px; }
+  .tall .photo{ height:auto; flex:1 1 auto; min-height:460px; margin-top:40px; }
+  .tall .textbox{ flex:0 0 auto; padding:36px 84px 32px 0; gap:24px; }
+  .tall .sub{ font-size:30px; }
+  .tall .quotewrap{ padding-right:84px; }
+  .tall .foot{ margin-bottom:300px; margin-right:84px; }
+  .hide{ display:none !important; }
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="head">
+    <div class="logo"><div class="a">TRANSILVANIA</div><div class="b">NEWS</div></div>
+    <div class="badge" id="badge">PAMFLET</div>
+  </div>
+
+  <div class="main">
+    <!-- cover / photo -->
+    <div class="photo hide" id="photo"></div>
+    <div class="textbox hide" id="textbox">
+      <div class="ttl" id="ttl"></div>
+      <div class="sub" id="sub"></div>
+    </div>
+    <!-- quote -->
+    <div class="quotewrap hide" id="quotewrap">
+      <div class="qmark">&ldquo;</div>
+      <div class="ttl" id="quote"></div>
+      <div class="who" id="who"><i></i><span id="whoTxt"></span></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="handle">
+      <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"></rect><path d="M16 11.37a4 4 0 1 1-7.914 1.174A4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+      <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+      <span id="handle">@transilvanianewsofficial</span>
+    </div>
+    <div class="pg" id="pg"></div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var p=new URLSearchParams(location.search);
+  function g(k,d){ var v=p.get(k); return (v===null)?(d||""):v; }
+  function $(id){ return document.getElementById(id); }
+  function show(id){ $(id).classList.remove("hide"); }
+  function rich(el, txt){
+    txt=(txt||"").replace(/\s+/g," ").trim();
+    txt.split(/(\[[^\]]+\])/).forEach(function(part){
+      if(!part) return;
+      if(part.charAt(0)==="[" && part.charAt(part.length-1)==="]"){ var s=document.createElement("span"); s.className="hl"; s.textContent=part.slice(1,-1); el.appendChild(s); }
+      else el.appendChild(document.createTextNode(part));
+    });
+    return txt.replace(/[\[\]]/g,"").length;
+  }
+  var H=parseInt(g("h","1350"),10)||1350; document.documentElement.style.setProperty("--H",H+"px");
+  var TALL=H>=1700; if(TALL) document.documentElement.classList.add("tall");
+  var slide=g("slide","cover").toLowerCase();
+  var fr=g("frame",""); if(fr!=="") document.documentElement.style.setProperty("--F",(parseInt(fr,10)||0)+"px");
+  $("badge").textContent=g("cat","PAMFLET");
+  $("handle").textContent=g("handle","@transilvanianewsofficial");
+  var n=g("n",""), total=g("total","");
+  if(n && total) $("pg").textContent=("0"+n).slice(-2)+" / "+("0"+total).slice(-2);
+
+  if(slide==="cover" || slide==="photo"){
+    show("photo"); show("textbox");
+    var img=g("img",""); if(img) $("photo").style.backgroundImage="url('"+img.replace(/'/g,"%27")+"')";
+    var pos=g("pos",""); if(pos) $("photo").style.backgroundPosition=pos;
+    var L=rich($("ttl"), g("title","Titlul pamfletului"));
+    var fs = L<=40?74 : L<=60?68 : L<=85?62 : L<=110?54 : 48;
+    $("ttl").style.fontSize=(parseInt(g("fs",""),10)||fs)+"px";
+    var sub=g("sub","").trim(); if(sub) $("sub").textContent=sub; else $("sub").style.display="none";
+    if(slide==="photo" && !img) $("photo").style.height="0";
+  }
+
+  if(slide==="quote"){
+    show("quotewrap");
+    var Lq=rich($("quote"), g("quote","Un citat scurt și [puternic]."));
+    var fq = Lq<=50?84 : Lq<=80?76 : Lq<=115?66 : Lq<=150?58 : 52; $("quote").style.lineHeight="1.3";
+    $("quote").style.fontSize=(parseInt(g("fs",""),10)||Math.round(fq*(TALL?1.1:1)))+"px";
+    var who=g("who","").trim(); if(who) $("whoTxt").textContent=who; else $("who").style.display="none";
+  }
+})();
+</script>
+</body>
+</html>
