@@ -114,6 +114,20 @@
     show("photo"); show("textbox");
     var img=g("img",""); if(img) $("photo").style.backgroundImage="url('"+img.replace(/'/g,"%27")+"')";
     var pos=g("pos",""); if(pos) $("photo").style.backgroundPosition=pos;
+    var ct=parseFloat(g("ct","")), cb=parseFloat(g("cb","")), cl=parseFloat(g("cl","")), cr=parseFloat(g("cr",""));
+    if(img && (!isNaN(ct)||!isNaN(cb)||!isNaN(cl)||!isNaN(cr))){
+      function pc(v,d){ v=isNaN(v)?d:v; if(v>1) v=v/100; return Math.min(1,Math.max(0,v)); }
+      var T=pc(ct,0), B=pc(cb,1), Lf=pc(cl,0), R=pc(cr,1);
+      if(B-T<0.1){ T=0; B=1; } if(R-Lf<0.1){ Lf=0; R=1; }
+      var im=new Image();
+      im.onload=function(){
+        var el=$("photo"), BW=el.clientWidth, BH=el.clientHeight, w=im.naturalWidth, h=im.naturalHeight;
+        var cw=w*(R-Lf), ch=h*(B-T), sc=Math.max(BW/cw, BH/ch);
+        el.style.backgroundSize=(w*sc)+"px "+(h*sc)+"px";
+        el.style.backgroundPosition=(-(Lf*w*sc+(cw*sc-BW)/2))+"px "+(-(T*h*sc+(ch*sc-BH)/2))+"px";
+      };
+      im.src=img;
+    }
     var L=rich($("ttl"), g("title","Titlul pamfletului"));
     var fs = L<=40?74 : L<=60?68 : L<=85?62 : L<=110?54 : 48;
     $("ttl").style.fontSize=(parseInt(g("fs",""),10)||fs)+"px";
